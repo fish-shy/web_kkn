@@ -49,8 +49,8 @@ export default function Profil() {
             <h2>Perjalanan pembentukan kelurahan</h2>
             <p className="lead">
               Dibentuk melalui Peraturan Daerah Kota Banjarbaru Nomor 2 Tahun
-              2004, Landasan Ulin Tengah kini menjadi kelurahan dengan jumlah
-              penduduk terbanyak kedua di Kecamatan Liang Anggang.
+              2004, Landasan Ulin Tengah kini menjadi salah satu kelurahan
+              berpenduduk terpadat di Kecamatan Liang Anggang.
             </p>
             <Link to="/data" className="btn btn--ghost btn--sm">
               Lihat data wilayah

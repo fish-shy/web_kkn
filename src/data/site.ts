@@ -16,26 +16,11 @@ export const SITE = {
     'Situs resmi Kelurahan Landasan Ulin Tengah, Kecamatan Liang Anggang, Kota Banjarbaru. Menyajikan profil wilayah, data kependudukan, berita, serta kegiatan Kampung Keluarga Berkualitas secara terbuka.',
   logo: '/logo-kelurahan.jpg',
   foto: '/foto-kelurahan.png',
-
-  /** Foto latar hero di beranda. Kosongkan ('') untuk latar hijau polos. */
-  heroFoto: '/kantor-kelurahan.jpg',
-  /**
-   * Titik fokus foto hero (object-position CSS).
-   * X 62% menggeser bidikan ke gedung kantor; Y 34% menaruh potongan pada
-   * langit, atap, dan papan nama — jalan serta genangan di bawah terpangkas.
-   */
-  heroFokus: '62% 34%',
-  /**
-   * Kredit pemotret — WAJIB selama foto hero berlisensi atribusi.
-   * Setel null bila memakai foto milik kelurahan sendiri.
-   */
-  heroKredit: {
-    teks: 'Foto: Arief R. Sandan (Ezagren)',
-    url: 'https://commons.wikimedia.org/wiki/File:Kantor_Kelurahan_Landasan_Ulin_Tengah,_Banjarbaru.JPG',
-  } as { teks: string; url: string } | null,
+  // Alamat & telepon terkonfirmasi dari halaman kontak situs resmi kelurahan
+  // dan papan nama kantor yang terlihat pada foto Penilaian Eco Office.
   alamat:
-    'Jl. Trikora, Kelurahan Landasan Ulin Tengah, Kec. Liang Anggang, Kota Banjarbaru, Kalimantan Selatan 70724',
-  telepon: '(0511) 4705 123',
+    'Jl. A. Yani KM 22.600, Kelurahan Landasan Ulin Tengah, Kec. Liang Anggang, Kota Banjarbaru, Kalimantan Selatan 70723',
+  telepon: '(0511) 4705429',
   whatsapp: '0812-5100-0000',
   whatsappLink: 'https://wa.me/6281251000000',
   email: 'landasanulintengah@banjarbarukota.go.id',
@@ -71,10 +56,24 @@ export const JAM_RINGKAS = [
   { hari: 'Sabtu – Minggu', jam: 'Tutup' },
 ]
 
+/**
+ * Hanya akun yang terverifikasi yang dicantumkan. Tautan Facebook & YouTube
+ * sebelumnya hanya mengarah ke beranda situsnya masing-masing — tautan mati
+ * seperti itu lebih buruk daripada tidak ada sama sekali, jadi dihapus.
+ * Poster resmi kelurahan menyebut Facebook "Kelurahan Landasanulintengah";
+ * tambahkan kembali di sini bila URL persisnya sudah dipastikan.
+ */
 export const SOSMED = [
-  { label: 'Instagram', href: 'https://www.instagram.com/', icon: 'instagram' },
-  { label: 'Facebook', href: 'https://www.facebook.com/', icon: 'facebook' },
-  { label: 'YouTube', href: 'https://www.youtube.com/', icon: 'youtube' },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/kelurahan_landasanulintengah/',
+    icon: 'instagram',
+  },
+  {
+    label: 'Situs resmi kelurahan',
+    href: 'https://kel-landasanulintengah.banjarbarukota.go.id/',
+    icon: 'external',
+  },
   { label: 'WhatsApp', href: SITE.whatsappLink, icon: 'whatsapp' },
 ] as const
 
@@ -86,7 +85,13 @@ export const STAT_UTAMA = [
   { value: '16 / 3', label: 'Rukun Tetangga / RW' },
 ]
 
-/** Status kelurahan sebagai lokus Kampung Keluarga Berkualitas. */
+/**
+ * Status kelurahan sebagai lokus Kampung Keluarga Berkualitas.
+ * CATATAN: portal Kampung KB memuat dua tanggal berbeda — tabel profilnya
+ * menulis 21 November 2022, sedangkan kepala halamannya 17 Juni 2026 (besar
+ * kemungkinan tanggal pendataan ulang, bukan pencanangan). Yang dipakai di
+ * sini tanggal dari tabel; mohon dipastikan ke kelurahan.
+ */
 export const KAMPUNG_KB = {
   pencanangan: '21 November 2022',
   klasifikasi: 'Berkembang',

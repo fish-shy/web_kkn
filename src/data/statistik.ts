@@ -13,6 +13,13 @@
  * diam-diam. Mohon dikonfirmasi ke kelurahan saat pemutakhiran berikutnya.
  *
  * Data keluarga miskin (desil 1–2) sengaja TIDAK ditampilkan di situs ini.
+ *
+ * PEMBANDING LUAR — Wikipedia bahasa Indonesia mencatat penduduk Landasan
+ * Ulin Tengah 7.462 jiwa, berbeda ±1.600 dari angka Kampung KB (9.063).
+ * Wikipedia sendiri tidak konsisten: jumlah keempat kelurahan di Liang
+ * Anggang di sana (26.383) tak sama dengan total kecamatannya (38.272).
+ * Situs ini memakai angka Kampung KB karena itu data yang disetorkan
+ * kelurahan sendiri; bandingkan dengan BPS saat pemutakhiran berikutnya.
  */
 
 /** Tabel Gambaran Umum pada profil Kampung KB. */

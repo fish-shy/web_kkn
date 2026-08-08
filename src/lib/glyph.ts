@@ -1,15 +1,17 @@
 import type { IconName } from '../components/Icon'
 
-/** Ikon yang mewakili tiap kategori berita / album galeri. */
+/**
+ * Ikon yang mewakili tiap kategori berita / album galeri.
+ * Hanya terpakai bila item tidak punya foto asli — sebagai gambar cadangan.
+ */
 export const GLYPH: Record<string, IconName> = {
+  // kategori berita
   Kesehatan: 'heart',
   Pemerintahan: 'building',
-  Sosial: 'users',
   Pembangunan: 'ruler',
-  Ekonomi: 'store',
-  Pendidikan: 'book',
-  'Kegiatan Warga': 'users',
-  'Posyandu & Kesehatan': 'heart',
-  Keagamaan: 'mosque',
-  UMKM: 'store',
+
+  // album galeri
+  'Apel Pagi': 'users',
+  'Penilaian Eco Office': 'leaf',
+  Pengumuman: 'megaphone',
 }

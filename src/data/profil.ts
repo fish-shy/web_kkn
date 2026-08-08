@@ -11,9 +11,14 @@ export const SEJARAH = [
     teks: 'Kelurahan Landasan Ulin Tengah dibentuk berdasarkan Peraturan Daerah Kota Banjarbaru Nomor 2 Tahun 2004 tentang Pembentukan dan Pemecahan Kelurahan Dalam Wilayah Kota Banjarbaru, dan berkedudukan sebagai salah satu kelurahan induk.',
   },
   {
+    tahun: '2007',
+    judul: 'Pembentukan Kecamatan Liang Anggang',
+    teks: 'Melalui Peraturan Daerah Kota Banjarbaru Nomor 4 Tahun 2007, Kecamatan Landasan Ulin dimekarkan menjadi Kecamatan Landasan Ulin dan Kecamatan Liang Anggang. Kelurahan Landasan Ulin Tengah masuk ke dalam kecamatan yang baru dibentuk tersebut.',
+  },
+  {
     tahun: '2008',
     judul: 'Pemekaran kelurahan',
-    teks: 'Wilayah kelurahan dimekarkan menjadi dua, yaitu Kelurahan Landasan Ulin Tengah dan Kelurahan Landasan Ulin Utara. Kelurahan berada dalam lingkup Kecamatan Liang Anggang, berjarak sekitar ± 9 km dari pusat pemerintahan Kota Banjarbaru.',
+    teks: 'Wilayah kelurahan dimekarkan menjadi dua, yaitu Kelurahan Landasan Ulin Tengah dan Kelurahan Landasan Ulin Utara. Letaknya sekitar ± 9 km dari pusat pemerintahan Kota Banjarbaru.',
   },
   {
     tahun: '2022',

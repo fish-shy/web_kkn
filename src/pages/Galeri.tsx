@@ -119,7 +119,12 @@ export default function Galeri() {
                     onClick={() => setAktif(i)}
                     aria-label={`Perbesar: ${g.judul}`}
                   >
-                    <Thumb seed={g.id + g.judul} glyph={GLYPH[g.album]} />
+                    <Thumb
+                      seed={g.id + g.judul}
+                      src={g.foto}
+                      alt={g.judul}
+                      glyph={GLYPH[g.album]}
+                    />
                     <span className="gallery-item__cap">
                       <span className="gallery-item__title">{g.judul}</span>
                       <span className="gallery-item__sub">
@@ -133,9 +138,16 @@ export default function Galeri() {
           )}
 
           <p className="form-note" style={{ marginTop: '1.5rem' }}>
-            Dokumentasi ditampilkan dengan gambar sementara. Unggah foto asli
-            kegiatan untuk menggantikannya — lihat catatan di berkas{' '}
-            <code>src/components/Thumb.tsx</code>.
+            Seluruh dokumentasi bersumber dari publikasi resmi kelurahan di{' '}
+            <a
+              href="https://kel-landasanulintengah.banjarbarukota.go.id/"
+              target="_blank"
+              rel="noreferrer"
+              style={{ textDecoration: 'underline', textUnderlineOffset: '2px' }}
+            >
+              kel-landasanulintengah.banjarbarukota.go.id
+            </a>
+            .
           </p>
         </div>
       </section>
@@ -149,12 +161,20 @@ export default function Galeri() {
           onClick={tutup}
         >
           <div className="lightbox__frame" onClick={(e) => e.stopPropagation()}>
-            <Thumb seed={foto.id + foto.judul} glyph={GLYPH[foto.album]} />
+            <Thumb
+              seed={foto.id + foto.judul}
+              src={foto.foto}
+              alt={foto.judul}
+              glyph={GLYPH[foto.album]}
+            />
             <div className="lightbox__cap">
               <span className="lightbox__title">{foto.judul}</span>
               <span className="lightbox__sub">
                 {foto.album} · {tanggalPanjang(foto.tanggal)} ·{' '}
-                {(aktif ?? 0) + 1} dari {hasil.length}
+                {(aktif ?? 0) + 1} dari {hasil.length} ·{' '}
+                <a href={foto.sumber} target="_blank" rel="noreferrer">
+                  publikasi asli
+                </a>
               </span>
             </div>
 

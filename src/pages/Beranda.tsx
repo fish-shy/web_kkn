@@ -11,18 +11,6 @@ import { BERITA_TERBARU } from '../data/berita'
 import { GALERI_BERANDA } from '../data/galeri'
 import { tanggalPanjang } from '../lib/format'
 
-/** Urutan warna kartu galeri di beranda — mengikuti rancangan. */
-const WARNA_TILE = [
-  'var(--leaf-400)',
-  'var(--forest-600)',
-  'var(--forest-900)',
-  'var(--clay-500)',
-  'var(--forest-800)',
-  'var(--leaf-500)',
-  'var(--clay-500)',
-  'var(--forest-700)',
-]
-
 export default function Beranda() {
   usePageMeta('Beranda', SITE.description)
 
@@ -34,17 +22,6 @@ export default function Beranda() {
       <section className="home-hero">
         <div className="hero-card">
           <div className="hero-card__top">
-            {SITE.heroFoto && (
-              <img
-                className="hero-card__bg"
-                src={SITE.heroFoto}
-                alt=""
-                aria-hidden="true"
-                fetchPriority="high"
-                style={{ '--hero-focus': SITE.heroFokus } as React.CSSProperties}
-              />
-            )}
-
             <div className="hero-card__main">
               <span className="eyebrow eyebrow--light">
                 {SITE.kecamatan} · {SITE.kota}
@@ -141,8 +118,8 @@ export default function Beranda() {
               <p>
                 Menurut konsep tata ruang Kota Banjarbaru, Landasan Ulin Tengah
                 diarahkan sebagai kawasan perumahan dan permukiman sekaligus
-                kawasan pergudangan dan industri. Jumlah penduduknya terbanyak
-                kedua di kecamatan, setelah Kelurahan Landasan Ulin Utara.
+                kawasan pergudangan dan industri, dan menjadi salah satu
+                kelurahan berpenduduk terpadat di Kecamatan Liang Anggang.
               </p>
 
               <div className="wilayah__map">
@@ -292,14 +269,8 @@ export default function Beranda() {
           <div className="gal-strip">
             {GALERI_BERANDA.map((g, i) => (
               <Reveal key={g.id} delay={(i % 4) * 70}>
-                <Link
-                  to="/galeri"
-                  className="gal-tile"
-                  title={g.judul}
-                  style={
-                    { '--tile': WARNA_TILE[i % WARNA_TILE.length] } as React.CSSProperties
-                  }
-                >
+                <Link to="/galeri" className="gal-tile" title={g.judul}>
+                  <img src={g.foto} alt={g.judul} loading="lazy" />
                   <span className="gal-tile__cap">{g.ringkas}</span>
                 </Link>
               </Reveal>

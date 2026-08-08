@@ -546,30 +546,26 @@
   gap: clamp(0.75rem, 1.5vw, 1rem);
 }
 
-/* Kartu warna datar seperti pada rancangan: satu bidang warna + judul singkat */
+/* Foto kegiatan dengan label pendek di bawahnya. Sebelumnya berupa kartu
+   warna datar — itu penampung sementara sampai foto aslinya tersedia. */
 .gal-tile {
   position: relative;
-  display: flex;
-  align-items: center;
-  padding: clamp(0.9rem, 2vw, 1.25rem);
+  display: block;
   border-radius: var(--r-md);
   overflow: hidden;
   aspect-ratio: 4 / 3;
-  background: var(--tile, var(--forest-700));
+  background: var(--forest-800);
   color: #fff;
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 
-.gal-tile::after {
-  content: '';
+.gal-tile img {
   position: absolute;
-  right: -3.5rem;
-  bottom: -4.5rem;
-  width: 10rem;
-  height: 10rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.09);
-  pointer-events: none;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
 }
 
 .gal-tile:hover {
@@ -577,14 +573,20 @@
   box-shadow: var(--shadow-md);
 }
 
+.gal-tile:hover img {
+  transform: scale(1.04);
+}
+
 .gal-tile__cap {
-  position: relative;
+  position: absolute;
+  inset: auto 0 0 0;
   z-index: 1;
-  font-size: 0.8rem;
+  padding: 1.9rem clamp(0.8rem, 1.6vw, 1rem) 0.8rem;
+  background: linear-gradient(transparent, rgba(15, 36, 16, 0.88));
+  font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.005em;
-  text-shadow: 0 1px 2px rgba(15, 36, 16, 0.2);
 }
 
 @media (max-width: 860px) {

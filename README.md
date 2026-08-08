@@ -78,8 +78,16 @@ dipublikasikan:
    kantor, koordinat peta, dan jam pelayanan.
 2. **Nama pejabat** (`STRUKTUR` di `src/data/profil.ts`) — jabatannya sudah
    benar, tetapi belum ada nama pemangkunya.
-3. **Galeri** (`src/data/galeri.ts`) — keterangan foto masih karangan.
-4. **Tautan media sosial** (`SOSMED` di `src/data/site.ts`).
+3. **Surel** (`src/data/site.ts`) — belum tercantum di mana pun pada sumber
+   resmi, jadi masih dugaan.
+4. **Nomor WhatsApp** (`src/data/site.ts`) — belum terverifikasi.
+5. **Jam pelayanan** (`JAM_RINGKAS` di `src/data/site.ts`) — belum tercantum
+   pada situs resmi.
+6. **Facebook** — poster resmi menyebut akun "Kelurahan Landasanulintengah",
+   tetapi URL persisnya belum dipastikan sehingga belum dicantumkan.
+
+Alamat kantor, nomor telepon, kode pos, dan akun Instagram **sudah
+terkonfirmasi** dari halaman kontak situs resmi kelurahan.
 
 ## Berita
 
@@ -96,6 +104,17 @@ dipublikasikan.
 Menambah berita baru: salin satu entri di `BERITA`, taruh fotonya di
 `public/berita/`, lalu isi `foto` dan `sumber`. Bila `foto` dikosongkan,
 gambar bangkitan otomatis dipakai sebagai gantinya.
+
+## Galeri
+
+`src/data/galeri.ts` memuat 15 gambar asli dari sumber yang sama, tersimpan di
+`public/berita/`. Keterangannya ditulis berdasarkan acara dan tanggal
+publikasi aslinya — bukan tafsiran atas isi frame. Tiap entri menyimpan
+`sumber`, dan tautan "publikasi asli" muncul di dalam lightbox.
+
+Album: **Apel Pagi** (8), **Penilaian Eco Office** (3), **Kesehatan** (2),
+**Pengumuman** (2). Album Pengumuman berisi poster/infografis, bukan foto
+kegiatan — sengaja dipisah supaya tidak tercampur.
 
 Data yang sebelumnya dikarang tanpa padanan di sumber — komposisi kelompok
 umur, pemeluk agama, mata pencaharian rinci, dan persentase penggunaan lahan —
