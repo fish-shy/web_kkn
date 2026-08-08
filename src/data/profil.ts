@@ -1,0 +1,173 @@
+/**
+ * Profil Kelurahan Landasan Ulin Tengah.
+ * SUMBER: Profil Kampung Keluarga Berkualitas Kelurahan Landasan Ulin Tengah,
+ * portal Kemendukbangga/BKKBN.
+ */
+
+export const SEJARAH = [
+  {
+    tahun: '2004',
+    judul: 'Dasar hukum pembentukan',
+    teks: 'Kelurahan Landasan Ulin Tengah dibentuk berdasarkan Peraturan Daerah Kota Banjarbaru Nomor 2 Tahun 2004 tentang Pembentukan dan Pemecahan Kelurahan Dalam Wilayah Kota Banjarbaru, dan berkedudukan sebagai salah satu kelurahan induk.',
+  },
+  {
+    tahun: '2008',
+    judul: 'Pemekaran kelurahan',
+    teks: 'Wilayah kelurahan dimekarkan menjadi dua, yaitu Kelurahan Landasan Ulin Tengah dan Kelurahan Landasan Ulin Utara. Kelurahan berada dalam lingkup Kecamatan Liang Anggang, berjarak sekitar ± 9 km dari pusat pemerintahan Kota Banjarbaru.',
+  },
+  {
+    tahun: '2022',
+    judul: 'Pencanangan Kampung Keluarga Berkualitas',
+    teks: 'Pada 21 November 2022 kelurahan dicanangkan sebagai lokus Kampung Keluarga Berkualitas dengan klasifikasi Berkembang, sebagai wadah integrasi program lintas sektor untuk penguatan institusi keluarga.',
+  },
+]
+
+/** Arahan tata ruang wilayah menurut konsep tata ruang Kota Banjarbaru. */
+export const TATA_RUANG = [
+  {
+    icon: 'home',
+    nama: 'Perumahan & permukiman',
+    teks: 'Kawasan hunian warga yang tersebar di 16 RT dan menjadi peruntukan utama wilayah kelurahan.',
+  },
+  {
+    icon: 'building',
+    nama: 'Pergudangan & industri',
+    teks: 'Kawasan pergudangan dan industri yang ditopang jalur lintas menuju pusat Kota Banjarbaru.',
+  },
+]
+
+export const VISI =
+  'Terwujudnya keluarga berkualitas, sejahtera, sehat, dan unggul di wilayah Kelurahan Landasan Ulin Tengah melalui sinergitas program Bangga Kencana dan pembangunan sektor terintegrasi.'
+
+export const MISI = [
+  'Meningkatkan komitmen kepedulian masyarakat dan lintas sektor dalam program pembangunan keluarga, kependudukan, dan keluarga berencana (Bangga Kencana).',
+  'Mengoptimalkan kualitas pelayanan kesehatan, pembinaan kelompok kegiatan (Poktan), serta pemenuhan sarana penunjang bagi balita, remaja, dan lansia.',
+  'Mempercepat penurunan angka stunting di tingkat kelurahan melalui optimalisasi program DASHAT dan keterpaduan posyandu.',
+  'Mendorong pemberdayaan ekonomi keluarga melalui pengembangan potensi lokal, UMKM makanan, dan peningkatan kapasitas wirausaha.',
+]
+
+export const STRUKTUR = {
+  lurah: { role: 'Lurah', name: 'Kepala Kelurahan' },
+  sekretaris: { role: 'Sekretaris Kelurahan', name: 'Sekretaris' },
+  seksi: [
+    {
+      role: 'Kasi Pemerintahan',
+      note: 'Administrasi kependudukan & pertanahan',
+    },
+    {
+      role: 'Kasi Ketenteraman & Ketertiban',
+      note: 'Trantibum dan perlindungan masyarakat',
+    },
+    {
+      role: 'Kasi Pembangunan',
+      note: 'Infrastruktur & pemberdayaan masyarakat',
+    },
+    {
+      role: 'Kasi Kesejahteraan Sosial',
+      note: 'Sosial, kesehatan & bantuan warga',
+    },
+  ],
+}
+
+export const BATAS = [
+  {
+    arah: 'U',
+    label: 'Sebelah Utara',
+    value: 'Kelurahan Landasan Ulin Utara',
+  },
+  {
+    arah: 'T',
+    label: 'Sebelah Timur',
+    value: 'Kelurahan Landasan Ulin Timur, Kecamatan Landasan Ulin',
+  },
+  {
+    arah: 'S',
+    label: 'Sebelah Selatan',
+    value:
+      'Kelurahan Landasan Ulin Selatan dan Desa Pandahan, Kecamatan Bati-Bati',
+  },
+  {
+    arah: 'B',
+    label: 'Sebelah Barat',
+    value: 'Kelurahan Landasan Ulin Barat',
+  },
+]
+
+export const DATA_POKOK = [
+  { key: 'Luas wilayah', val: '1.818,00 ha' },
+  { key: 'Jumlah penduduk', val: '9.063 jiwa' },
+  { key: 'Kepala keluarga', val: '2.843 KK' },
+  { key: 'Jumlah RT / RW', val: '16 / 3' },
+  { key: 'Pasangan usia subur', val: '1.929 PUS' },
+  { key: 'Jarak ke pusat kota', val: '± 9 km' },
+  { key: 'Klasifikasi Kampung KB', val: 'Berkembang' },
+]
+
+/** Program unggulan Kampung KB — tampil di beranda. */
+export const PROGRAM = [
+  {
+    icon: 'heart',
+    title: 'DASHAT — Dapur Sehat Atasi Stunting',
+    text: 'Intervensi gizi bersama 8 posyandu untuk 129 balita berstatus gizi kurang, lewat pemberian makanan tambahan berbahan pangan lokal.',
+    to: '/berita',
+  },
+  {
+    icon: 'file-text',
+    title: 'Rumah Dataku',
+    text: 'Pemutakhiran berkala data kependudukan per RT — KK, PUS, ibu hamil, lansia, hingga tingkat kesejahteraan keluarga.',
+    to: '/data',
+  },
+  {
+    icon: 'store',
+    title: 'UPPKA & UMKM Kuliner',
+    text: 'Pelatihan wirausaha dan sanitasi produk bagi klaster UMKM makanan olahan rumah tangga, penopang ekonomi keluarga.',
+    to: '/berita',
+  },
+]
+
+/** Potensi lokal kelurahan. */
+export const POTENSI = [
+  {
+    judul: 'Mata pencaharian utama',
+    teks: 'Sebagian besar penduduk produktif bergerak di sektor swasta dan wiraswasta, dengan 2.846 pelaku usaha di seluruh kelurahan. Disusul sektor aparatur negara, tenaga pengajar, serta pertanian dan peternakan lokal.',
+  },
+  {
+    judul: 'Produk unggulan',
+    teks: 'Industri makanan olahan rumah tangga — katering, camilan lokal, serta kue basah dan kering — yang menjadi penopang ekonomi keluarga.',
+  },
+  {
+    judul: 'Arah pengembangan',
+    teks: 'Kemitraan UMKM kuliner dengan platform digital, pelatihan manajemen kemasan produk, pemasaran melalui kegiatan Kampung KB, serta pengembangan klaster usaha mikro berbasis rukun tetangga.',
+  },
+  {
+    judul: 'Pemberdayaan masyarakat',
+    teks: 'Pembinaan rutin kelompok kerja Kampung KB, pelatihan kader mengolah menu sehat bergizi seimbang, serta keterlibatan aktif kader PKK dan dasawisma dalam pembinaan ekonomi keluarga.',
+  },
+]
+
+/** Rencana kerja prioritas Kampung KB. */
+export const RENCANA_KERJA = [
+  {
+    judul: 'Penurunan gizi kurang & stunting terintegrasi',
+    teks: 'Mengoptimalkan fungsi DASHAT bersama 8 posyandu untuk mengintervensi 129 balita berstatus gizi kurang atau stunting melalui pemberian makanan tambahan berbahan pangan lokal.',
+  },
+  {
+    judul: 'Penguatan akurasi data lewat Rumah Dataku',
+    teks: 'Pembaruan berkala data kependudukan per RT — pencatatan KK, PUS, ibu hamil, lansia, dan tingkat kesejahteraan — guna memastikan validitas data sebelum dilaporkan.',
+  },
+  {
+    judul: 'Peningkatan kepesertaan KB aktif',
+    teks: 'Menggerakkan kader BKB, BKR, dan BKL bersama Penyuluh KB untuk meningkatkan kesadaran pasangan usia subur dalam ber-KB serta mengendalikan jarak kelahiran.',
+  },
+  {
+    judul: 'Pemberdayaan ekonomi keluarga (UPPKA)',
+    teks: 'Pelatihan manajemen wirausaha dan sanitasi produk bagi klaster UMKM kuliner lokal, serta penguatan akses permodalan terpadu untuk meningkatkan kesejahteraan keluarga.',
+  },
+]
+
+/** Sorotan fitur di bagian "Menghadirkan layanan publik…" */
+export const KEUNGGULAN = [
+  'Profil wilayah dan struktur organisasi yang bisa ditelusuri kapan saja.',
+  'Publikasi kegiatan dan program Kampung Keluarga Berkualitas secara berkala.',
+  'Data kependudukan per RT yang terbuka untuk warga.',
+]

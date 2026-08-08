@@ -1,0 +1,249 @@
+/* =========================================================================
+   Penyesuaian layar kecil
+
+   Aturan responsif dasar tiap komponen (jumlah kolom grid, dsb.) tetap
+   berada di berkasnya masing-masing, tepat di sebelah komponennya.
+   Berkas ini dimuat paling akhir dan hanya berisi penghalusan khusus
+   tablet & ponsel: target sentuh, arah tumpukan, dan kerapatan teks.
+   ========================================================================= */
+
+/* Anak grid boleh menyusut lebih kecil dari isinya — tanpa ini, teks atau
+   tabel panjang bisa memaksa halaman menggulir mendatar. */
+.split,
+.wilayah,
+.two-col,
+.batas,
+.kontak,
+.article,
+.berita-row,
+.berita-featured {
+  min-width: 0;
+}
+
+.split > *,
+.wilayah > *,
+.two-col > *,
+.batas > *,
+.kontak > *,
+.article > *,
+.berita-row > *,
+.berita-featured > * {
+  min-width: 0;
+}
+
+/* Offset elemen lengket disesuaikan tinggi navbar (±4,6rem) */
+.two-col__sticky,
+.article__sticky {
+  top: 5.6rem;
+}
+
+/* =========================================================================
+   Target sentuh — perangkat tanpa kursor presisi
+   ========================================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .chip {
+    padding: 0.65rem 1.1rem;
+  }
+
+  .pagination__btn {
+    min-width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .footer__social a {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .footer__list a {
+    display: inline-block;
+    padding-block: 0.2rem;
+  }
+
+  .drawer__link {
+    padding: 0.95rem 0.9rem;
+  }
+
+  .acc__btn {
+    padding-block: 1.15rem;
+  }
+
+  /* efek angkat saat hover tidak relevan di layar sentuh */
+  .btn:hover,
+  .card--link:hover,
+  .news-card:hover,
+  .gal-tile:hover,
+  .gallery-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* =========================================================================
+   Tablet — ≤ 768px
+   ========================================================================= */
+
+@media (max-width: 768px) {
+  /* Judul seksi dan tombol aksinya ditumpuk, bukan berdesakan sebaris */
+  .section-head__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  /* Pita ajakan: teks di atas, tombol memenuhi lebar di bawahnya */
+  .cta-band {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-band__actions .btn {
+    flex: 1 1 12rem;
+  }
+
+  /* Pencarian didahulukan, deretan kategori menyusul */
+  .berita-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
+
+  .berita-toolbar .search {
+    order: -1;
+    min-width: 0;
+  }
+
+  .article__share {
+    gap: 0.5rem;
+  }
+
+  .article__share-end {
+    margin-left: 0;
+  }
+}
+
+/* =========================================================================
+   Ponsel — ≤ 560px
+   ========================================================================= */
+
+@media (max-width: 560px) {
+  .cta-band__actions .btn,
+  .split__body > .btn,
+  .empty .btn,
+  .notfound__links .btn {
+    width: 100%;
+  }
+
+  .notfound__links {
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  /* Tombol bagikan ditumpuk agar tidak terpotong separuh */
+  .article__share {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .article__share span {
+    margin-bottom: 0.15rem;
+  }
+
+  /* Kutipan dan isi artikel sedikit dirapatkan */
+  .article__body {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .article__body blockquote {
+    padding: 1rem 1.1rem;
+    font-size: 0.98rem;
+  }
+
+  /* Piramida umur: kolom label dipersempit supaya batang tetap terbaca */
+  .agebar {
+    grid-template-columns: 3.4rem 1fr 1fr;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+  }
+
+  .agebar__n {
+    font-size: 0.66rem;
+  }
+
+  /* Lightbox: tombol navigasi dikecilkan & dirapatkan ke tepi */
+  .lightbox {
+    padding: 0.75rem;
+  }
+
+  .lightbox__nav {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .lightbox__nav--prev {
+    left: 0.5rem;
+  }
+
+  .lightbox__nav--next {
+    right: 0.5rem;
+  }
+
+  .lightbox__cap {
+    padding: 0.95rem 1.1rem;
+  }
+
+  /* Baris jam layanan & data agar tidak berdempetan */
+  .datarow {
+    gap: 0.75rem;
+    padding-block: 0.7rem;
+  }
+
+  .footer__bar-inner {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* =========================================================================
+   Ponsel kecil — ≤ 400px
+   ========================================================================= */
+
+@media (max-width: 400px) {
+  /* Nama kelurahan di navbar dipendekkan agar tidak mendesak tombol menu */
+  .brand__name {
+    font-size: 0.92rem;
+  }
+
+  .brand__mark {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .hero-card__stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* Satu kolom: semua sel rata kiri, pemisah jadi garis horizontal.
+     Selektor nth-child ditulis ulang agar mengalahkan aturan dua-kolom
+     di pages.css yang kekhususannya lebih tinggi. */
+  .hero-card__stats > *:nth-child(odd),
+  .hero-card__stats > *:nth-child(even) {
+    border-right: 0;
+    padding-inline: 0;
+    border-bottom: 1px solid var(--lime-band-line);
+  }
+
+  .hero-card__stats > *:nth-child(4) {
+    border-bottom: 0;
+  }
+
+  .gal-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .gal-tile {
+    aspect-ratio: 16 / 7;
+  }
+}
