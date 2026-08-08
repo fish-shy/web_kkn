@@ -34,6 +34,17 @@ export default function Beranda() {
       <section className="home-hero">
         <div className="hero-card">
           <div className="hero-card__top">
+            {SITE.heroFoto && (
+              <img
+                className="hero-card__bg"
+                src={SITE.heroFoto}
+                alt=""
+                aria-hidden="true"
+                fetchPriority="high"
+                style={{ '--hero-focus': SITE.heroFokus } as React.CSSProperties}
+              />
+            )}
+
             <div className="hero-card__main">
               <span className="eyebrow eyebrow--light">
                 {SITE.kecamatan} · {SITE.kota}
