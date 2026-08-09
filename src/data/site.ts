@@ -19,7 +19,7 @@ export const SITE = {
   // Alamat & telepon terkonfirmasi dari halaman kontak situs resmi kelurahan
   // dan papan nama kantor yang terlihat pada foto Penilaian Eco Office.
   alamat:
-    'Jl. A. Yani KM 22.600, Kelurahan Landasan Ulin Tengah, Kec. Liang Anggang, Kota Banjarbaru, Kalimantan Selatan 70723',
+    'Jl. A. Yani Km. 22,600 RT 003 RW 002, Kelurahan Landasan Ulin Tengah, Kec. Liang Anggang, Kota Banjarbaru, Kalimantan Selatan 70723',
   telepon: '(0511) 4705429',
   whatsapp: '0812-5100-0000',
   whatsappLink: 'https://wa.me/6281251000000',

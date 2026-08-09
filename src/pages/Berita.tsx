@@ -5,8 +5,17 @@ import { usePageMeta } from '../lib/usePageMeta'
 import { Icon } from '../components/Icon'
 import { Thumb } from '../components/Thumb'
 import { GLYPH } from '../lib/glyph'
-import { ArrowLink, Empty, Pagination, Reveal } from '../components/ui'
-import { BERITA_TERBARU, KATEGORI, type Kategori } from '../data/berita'
+import {
+  ArrowLink,
+  Empty,
+  GalatKotak,
+  Memuat,
+  Pagination,
+  Reveal,
+} from '../components/ui'
+import { daftarKategori } from '../data/berita'
+import { useBerita } from '../lib/sumber'
+import { srcGambar } from '../lib/api'
 import { tanggalPanjang } from '../lib/format'
 
 const PER_HAL = 6
@@ -17,13 +26,17 @@ export default function Berita() {
     'Kabar terbaru seputar kegiatan, program, dan pengumuman dari Kelurahan Landasan Ulin Tengah.',
   )
 
-  const [kategori, setKategori] = useState<Kategori | 'Semua'>('Semua')
+  const { data: berita, memuat, galat, ulangi } = useBerita()
+
+  const [kategori, setKategori] = useState<string>('Semua')
   const [q, setQ] = useState('')
   const [hal, setHal] = useState(1)
 
+  const kategori2 = useMemo(() => daftarKategori(berita), [berita])
+
   const hasil = useMemo(() => {
     const kunci = q.trim().toLowerCase()
-    return BERITA_TERBARU.filter((b) => {
+    return berita.filter((b) => {
       const cocokKategori = kategori === 'Semua' || b.kategori === kategori
       const cocokCari =
         !kunci ||
@@ -32,7 +45,7 @@ export default function Berita() {
         b.kategori.toLowerCase().includes(kunci)
       return cocokKategori && cocokCari
     })
-  }, [kategori, q])
+  }, [berita, kategori, q])
 
   const polos = kategori === 'Semua' && !q.trim()
   const utama = polos && hal === 1 ? hasil[0] : undefined
@@ -55,11 +68,15 @@ export default function Berita() {
         title="Berita & Kegiatan"
         lead="Ikuti kabar terbaru seputar kegiatan warga, program kelurahan, dan pengumuman resmi."
         meta={[
-          { icon: 'file-text', text: `${BERITA_TERBARU.length} publikasi` },
-          {
-            icon: 'calendar',
-            text: `Terbaru ${tanggalPanjang(BERITA_TERBARU[0].tanggal)}`,
-          },
+          { icon: 'file-text', text: `${berita.length} publikasi` },
+          ...(berita.length > 0
+            ? [
+                {
+                  icon: 'calendar' as const,
+                  text: `Terbaru ${tanggalPanjang(berita[0].tanggal)}`,
+                },
+              ]
+            : []),
         ]}
       />
 
@@ -75,7 +92,7 @@ export default function Berita() {
               >
                 Semua
               </button>
-              {KATEGORI.map((k) => (
+              {kategori2.map((k) => (
                 <button
                   key={k}
                   type="button"
@@ -101,7 +118,11 @@ export default function Berita() {
             </div>
           </div>
 
-          {hasil.length === 0 ? (
+          {galat && <GalatKotak pesan={galat} onUlangi={ulangi} />}
+
+          {memuat && berita.length === 0 ? (
+            <Memuat teks="Memuat berita…" />
+          ) : hasil.length === 0 ? (
             <Empty
               title="Berita tidak ditemukan"
               text="Coba kata kunci lain atau pilih kategori berbeda untuk melihat kegiatan kelurahan lainnya."
@@ -113,7 +134,7 @@ export default function Berita() {
                   <Link to={`/berita/${utama.slug}`} className="berita-featured">
                     <Thumb
                       seed={utama.slug}
-                      src={utama.foto}
+                      src={srcGambar(utama.foto)}
                       alt={utama.judul}
                       glyph={GLYPH[utama.kategori]}
                       className="berita-featured__media"
@@ -155,7 +176,7 @@ export default function Berita() {
                       </div>
                       <Thumb
                         seed={b.slug}
-                        src={b.foto}
+                        src={srcGambar(b.foto)}
                         alt={b.judul}
                         glyph={GLYPH[b.kategori]}
                         className="berita-row__thumb"

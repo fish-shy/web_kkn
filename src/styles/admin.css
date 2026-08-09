@@ -1,0 +1,787 @@
+/* ============================================================================
+   PANEL ADMIN
+   Tata letak terpisah dari situs publik: sidebar tetap + area kerja.
+   Warnanya sengaja mengikuti token yang sama agar terasa satu keluarga, tapi
+   kepadatannya lebih rapat karena ini alat kerja, bukan halaman baca.
+   ========================================================================== */
+
+.adm {
+  display: grid;
+  grid-template-columns: 15.5rem 1fr;
+  min-height: 100vh;
+  background: var(--cream-50);
+}
+
+.adm-muat {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: var(--cream-50);
+}
+
+/* --- Sidebar ---------------------------------------------------------------- */
+
+.adm-sisi {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.35rem 1rem;
+  background: var(--forest-900);
+  color: var(--on-dark);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.adm-sisi__merek {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0 0.35rem 1.1rem;
+  border-bottom: 1px solid var(--on-dark-line);
+}
+
+.adm-sisi__merek img {
+  border-radius: var(--r-sm);
+  object-fit: cover;
+  flex: none;
+}
+
+.adm-sisi__merek span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  min-width: 0;
+}
+
+.adm-sisi__merek strong {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+}
+
+.adm-sisi__merek small {
+  font-size: 0.72rem;
+  color: var(--on-dark-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adm-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.adm-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: none;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--on-dark-2);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.16s var(--ease), color 0.16s var(--ease);
+}
+
+.adm-nav__item:hover {
+  background: var(--on-dark-fill);
+  color: var(--on-dark);
+}
+
+.adm-nav__item.active {
+  background: var(--leaf-600);
+  color: #fff;
+}
+
+.adm-nav__item svg {
+  flex: none;
+}
+
+.adm-sisi__kaki {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--on-dark-line);
+}
+
+.adm-sisi__akun {
+  margin-top: 0.5rem;
+  padding: 0 0.75rem;
+  font-size: 0.73rem;
+  color: var(--on-dark-3);
+  line-height: 1.5;
+}
+
+.adm-sisi__akun strong {
+  color: var(--on-dark-2);
+}
+
+/* --- Area kerja ------------------------------------------------------------- */
+
+.adm-isi {
+  padding: 2rem 2rem 4rem;
+  max-width: 78rem;
+  width: 100%;
+}
+
+.adm-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.adm-head__title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--ink-900);
+}
+
+.adm-head__sub {
+  margin-top: 0.35rem;
+  font-size: 0.86rem;
+  color: var(--ink-500);
+  max-width: 46rem;
+  line-height: 1.55;
+}
+
+.adm-head__aksi {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* --- Kartu ------------------------------------------------------------------ */
+
+.adm-kartu {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.adm-kartu__kepala {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--cream-50);
+}
+
+.adm-kartu__judul {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  color: var(--ink-900);
+}
+
+.adm-kartu__judul svg {
+  color: var(--leaf-700);
+}
+
+.adm-kartu__ket {
+  margin-top: 0.3rem;
+  font-size: 0.79rem;
+  color: var(--ink-500);
+  line-height: 1.55;
+  max-width: 52rem;
+}
+
+.adm-kartu__isi {
+  padding: 1.25rem;
+}
+
+.adm-kolom2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.adm-kolom2 > .adm-kartu {
+  margin-bottom: 0;
+}
+
+.adm-baris2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0 1rem;
+}
+
+.adm-baris3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0 1rem;
+  align-items: end;
+}
+
+.adm-kisi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0 1rem;
+}
+
+.adm-kaki {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+/* --- Kartu angka ------------------------------------------------------------ */
+
+.adm-angka {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.adm-angka__kartu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.15rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  color: inherit;
+  transition: border-color 0.18s var(--ease), transform 0.18s var(--ease);
+}
+
+.adm-angka__kartu:hover {
+  border-color: var(--leaf-400);
+  transform: translateY(-2px);
+}
+
+.adm-angka__kartu .icon-tile {
+  margin-bottom: 0.4rem;
+}
+
+.adm-angka__nilai {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  line-height: 1.1;
+  color: var(--forest-800);
+}
+
+.adm-angka__label {
+  font-size: 0.78rem;
+  color: var(--ink-500);
+}
+
+/* --- Daftar ringkas --------------------------------------------------------- */
+
+.adm-daftar {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.adm-daftar li + li {
+  border-top: 1px solid var(--line-soft);
+}
+
+.adm-daftar a {
+  display: block;
+  padding: 0.7rem 0;
+  color: inherit;
+}
+
+.adm-daftar a:hover .adm-daftar__judul {
+  color: var(--leaf-700);
+}
+
+.adm-daftar__judul {
+  display: block;
+  font-size: 0.87rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink-900);
+}
+
+.adm-daftar__meta {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--ink-400);
+}
+
+.adm-galeri-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.adm-galeri-mini__sel {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-xs);
+  overflow: hidden;
+  background: var(--cream-100);
+}
+
+.adm-galeri-mini__sel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Tabel ------------------------------------------------------------------ */
+
+.adm-tabel-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.adm-tabel {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.adm-tabel th {
+  padding: 0.6rem 0.7rem;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  background: var(--cream-50);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.adm-tabel td {
+  padding: 0.35rem 0.45rem;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+
+.adm-tabel--daftar td {
+  padding: 0.6rem 0.7rem;
+}
+
+.adm-tabel tr:last-child td {
+  border-bottom: none;
+}
+
+.adm-tabel__kosong {
+  padding: 1.25rem !important;
+  text-align: center;
+  color: var(--ink-400);
+  font-size: 0.82rem;
+}
+
+.input--sel {
+  padding: 0.42rem 0.55rem;
+  font-size: 0.83rem;
+  border-color: transparent;
+  background: transparent;
+}
+
+.input--sel:hover {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.input--sel:focus {
+  background: var(--paper);
+}
+
+.adm-tabel__aksi,
+.adm-tabel__aksi-kol {
+  width: 7.5rem;
+  white-space: nowrap;
+}
+
+.adm-tabel__aksi {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.adm-tabel__tautan {
+  display: block;
+  font-weight: 600;
+  color: var(--ink-900);
+  line-height: 1.4;
+}
+
+.adm-tabel__tautan:hover {
+  color: var(--leaf-700);
+}
+
+.adm-tabel__slug {
+  display: block;
+  margin-top: 0.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-400);
+}
+
+.adm-thumb {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 2.25rem;
+  border-radius: var(--r-xs);
+  overflow: hidden;
+  background: var(--cream-100);
+  color: var(--ink-400);
+}
+
+.adm-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Tombol ikon ------------------------------------------------------------ */
+
+.adm-ikon {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--paper);
+  color: var(--ink-700);
+  cursor: pointer;
+  transition: all 0.15s var(--ease);
+}
+
+.adm-ikon:hover:not(:disabled) {
+  border-color: var(--leaf-500);
+  color: var(--leaf-700);
+  background: var(--leaf-100);
+}
+
+.adm-ikon:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.adm-ikon--bahaya:hover:not(:disabled) {
+  border-color: var(--clay-500);
+  color: var(--clay-700);
+  background: var(--clay-100);
+}
+
+/* --- Pemilih gambar --------------------------------------------------------- */
+
+.adm-gambar {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.adm-gambar__pratinjau {
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-sm);
+  background: var(--cream-50);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.adm-gambar__pratinjau img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adm-gambar__kosong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--ink-400);
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.adm-gambar__kosong svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.adm-gambar__aksi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.adm-gambar__aksi label.btn {
+  cursor: pointer;
+}
+
+.adm-gambar__aksi label.btn[aria-disabled='true'] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.adm-galat {
+  font-size: 0.78rem;
+  color: var(--clay-700);
+}
+
+/* --- Editor blok berita ----------------------------------------------------- */
+
+.adm-blok-daftar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.adm-blok {
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--cream-50);
+}
+
+.adm-blok__kepala {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.adm-blok__jenis {
+  width: auto;
+  min-width: 9.5rem;
+  padding-block: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.adm-blok__aksi {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.adm-blok .textarea {
+  min-height: 6rem;
+  background: var(--paper);
+}
+
+.adm-blok-tambah {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+}
+
+/* --- Galeri admin ----------------------------------------------------------- */
+
+.adm-galeri {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: 1rem;
+}
+
+.adm-galeri__sel {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.adm-galeri__sel img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--cream-100);
+  display: block;
+}
+
+.adm-galeri__sel figcaption {
+  padding: 0.65rem 0.7rem;
+}
+
+.adm-galeri__judul {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink-900);
+  /* Judul bisa panjang; potong di dua baris agar tinggi kartu tetap rata. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.adm-galeri__meta {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--ink-400);
+}
+
+.adm-galeri__aksi {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* --- Editor sarana ---------------------------------------------------------- */
+
+.adm-sarana {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.adm-sarana__grup {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--cream-50);
+}
+
+.adm-sarana__hapus {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+/* --- Halaman masuk ---------------------------------------------------------- */
+
+.adm-masuk {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(1200px 600px at 50% -20%, var(--leaf-100), transparent 70%),
+    var(--cream-50);
+}
+
+.adm-masuk__kartu {
+  width: 100%;
+  max-width: 23rem;
+  padding: 2rem 1.75rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.adm-masuk__kartu img {
+  border-radius: var(--r-sm);
+  object-fit: cover;
+  margin: 0 auto 0.85rem;
+  display: block;
+}
+
+.adm-masuk__kartu h1 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--ink-900);
+}
+
+.adm-masuk__sub {
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--ink-500);
+}
+
+.adm-masuk__kartu .field {
+  text-align: left;
+}
+
+.adm-masuk__kembali {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.15rem;
+  font-size: 0.79rem;
+  color: var(--ink-500);
+}
+
+.adm-masuk__kembali:hover {
+  color: var(--leaf-700);
+}
+
+/* --- Layar sempit ----------------------------------------------------------- */
+
+@media (max-width: 60rem) {
+  .adm {
+    grid-template-columns: 1fr;
+  }
+
+  .adm-sisi {
+    position: static;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .adm-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .adm-nav__item {
+    width: auto;
+  }
+
+  .adm-sisi__kaki {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .adm-sisi__akun {
+    margin: 0;
+  }
+
+  .adm-isi {
+    padding: 1.5rem 1.1rem 3rem;
+  }
+
+  .adm-gambar {
+    grid-template-columns: 1fr;
+  }
+
+  .adm-gambar__pratinjau {
+    max-width: 12rem;
+  }
+}

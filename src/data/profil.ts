@@ -51,28 +51,99 @@ export const MISI = [
   'Mendorong pemberdayaan ekonomi keluarga melalui pengembangan potensi lokal, UMKM makanan, dan peningkatan kapasitas wirausaha.',
 ]
 
+/**
+ * Susunan perangkat mengikuti struktur yang tercantum di situs resmi
+ * kelurahan: Sekretariat dan tiga seksi (Pemerintahan, Kessos, Ekobang).
+ *
+ * Nama Lurah bersumber dari Media Center Banjarbaru. Ejaannya berbeda-beda
+ * antar pemberitaan — "H. Faisal Rizal", "H. M. Faisal Rizal", dan
+ * "H. M. Faisal Riza" — mohon dipastikan ejaan resminya ke kelurahan.
+ * Jabatan lain belum diketahui nama pemangkunya.
+ */
+/**
+ * Struktur organisasi RT/RW kelurahan.
+ *
+ * SUMBER: papan "Struktur Organisasi RT/RW Kelurahan Landasan Ulin Tengah"
+ * di kantor kelurahan.
+ *
+ * Yang dicantumkan hanya jabatannya, tanpa nama pengurus: nama berganti
+ * mengikuti surat keputusan yang berlaku, dan situs ini tidak perlu ikut
+ * menayangkan data pribadi pengurus RT/RW.
+ *
+ * Pembagian RT ke tiap RW di bawah ini cocok persis dengan tabel sebaran
+ * penduduk per RT pada halaman Data — keduanya dari sumber yang berbeda, jadi
+ * kecocokan itu sekaligus menjadi pemeriksaan silang.
+ */
 export const STRUKTUR = {
-  lurah: { role: 'Lurah', name: 'Kepala Kelurahan' },
-  sekretaris: { role: 'Sekretaris Kelurahan', name: 'Sekretaris' },
-  seksi: [
+  lurah: { role: 'Lurah' },
+
+  /** Pendamping dari Polri dan TNI, sejajar dengan Lurah pada papan. */
+  pendamping: [
     {
-      role: 'Kasi Pemerintahan',
-      note: 'Administrasi kependudukan & pertanahan',
+      role: 'Babinkamtibmas',
+      note: 'Pembina keamanan dan ketertiban masyarakat — Polri',
     },
     {
-      role: 'Kasi Ketenteraman & Ketertiban',
-      note: 'Trantibum dan perlindungan masyarakat',
+      role: 'Babinsa',
+      note: 'Bintara pembina desa — TNI AD',
     },
+  ],
+
+  forum: {
+    role: 'Ketua Forum RT/RW',
+    note: 'Penghubung antara pengurus RW dan kelurahan',
+  },
+
+  rw: [
+    { nama: 'RW 001', rt: ['RT 001', 'RT 002', 'RT 013', 'RT 016'] },
+    { nama: 'RW 002', rt: ['RT 003', 'RT 004', 'RT 005', 'RT 006'] },
     {
-      role: 'Kasi Pembangunan',
-      note: 'Infrastruktur & pemberdayaan masyarakat',
-    },
-    {
-      role: 'Kasi Kesejahteraan Sosial',
-      note: 'Sosial, kesehatan & bantuan warga',
+      nama: 'RW 003',
+      rt: [
+        'RT 007',
+        'RT 008',
+        'RT 009',
+        'RT 010',
+        'RT 011',
+        'RT 012',
+        'RT 014',
+        'RT 015',
+      ],
     },
   ],
 }
+
+/**
+ * Inovasi kelurahan yang dipaparkan pada Lomba Kelurahan Tingkat Kota
+ * Banjarbaru, 19 Maret 2024. Sumber: Media Center Banjarbaru.
+ */
+export const INOVASI = [
+  {
+    akronim: 'BAIMAN',
+    kepanjangan: 'Barcode Informasi Hasan Pian',
+    teks: 'Layanan informasi kelurahan berbasis barcode, sebagai indikator pelayanan digital.',
+  },
+  {
+    akronim: 'KASIH KAKA',
+    kepanjangan: 'Komunitas Aksi Kebersihan untuk Kenyamanan dan Keindahan',
+    teks: 'Gerakan kebersihan lingkungan yang digerakkan bersama warga antar-RT.',
+  },
+  {
+    akronim: 'JUMBA',
+    kepanjangan: 'Jumat Berbagi',
+    teks: 'Kegiatan berbagi rutin setiap Jumat bersama Tim Penggerak PKK dan Karang Taruna.',
+  },
+  {
+    akronim: 'GEMAS',
+    kepanjangan: 'Gerakan Membantu Anak Yatim dan Lansia',
+    teks: 'Pendampingan dan bantuan bagi anak yatim serta warga lanjut usia.',
+  },
+  {
+    akronim: 'GENCAR',
+    kepanjangan: 'Gerakan Lancar Membaca',
+    teks: 'Program keaksaraan untuk menghapus buta huruf di lingkungan kelurahan.',
+  },
+]
 
 export const BATAS = [
   {

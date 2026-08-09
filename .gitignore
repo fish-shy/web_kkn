@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Konfigurasi lokal — .env.example yang ikut masuk repo, bukan ini.
+.env
+.env.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -14,6 +14,27 @@ npm run preview  # cek hasil build secara lokal
 npm run lint
 ```
 
+Berita, galeri, dan data statistik sekarang diambil dari API di
+[`../backend`](../backend/README.md) — jalankan backend lebih dulu, kalau tidak
+halaman-halaman itu akan menampilkan pesan "Tidak dapat menghubungi server".
+Vite sudah mem-proxy `/api` ke `http://localhost:4000`, jadi saat pengembangan
+tidak perlu menyetel `VITE_API_URL`. Gambar unggahan tidak lewat proxy —
+disimpan di Supabase Storage dan dilayani langsung dari URL publiknya.
+
+## Panel admin
+
+Ada di `/admin` (masuk lewat `/admin/masuk`, akun diatur di `backend/.env`).
+Tata letaknya terpisah dari situs publik dan dijaga token JWT.
+
+| Rute                | Isi                                                            |
+| ------------------- | -------------------------------------------------------------- |
+| `/admin`            | Ringkasan jumlah berita, foto, dan angka penduduk               |
+| `/admin/berita`     | Daftar berita — cari, sunting, hapus                            |
+| `/admin/berita/baru`| Tambah berita; isinya disusun blok demi blok                    |
+| `/admin/berita/:id` | Sunting berita                                                  |
+| `/admin/galeri`     | Unggah gambar, beri keterangan & album, sunting, hapus          |
+| `/admin/statistik`  | Semua angka dan teks halaman Data; tiap bagian disimpan sendiri |
+
 ## Halaman
 
 | Rute             | Berkas                      | Isi                                                                        |
@@ -32,21 +53,29 @@ npm run lint
 
 ```
 src/
-  data/         ← SEMUA ISI SITUS ADA DI SINI (lihat catatan di bawah)
-    site.ts       identitas, kontak, menu, jam layanan, statistik utama
-    profil.ts     sejarah, visi & misi, struktur, batas wilayah, program
-    berita.ts     daftar berita beserta isi artikelnya
-    layanan.ts    katalog layanan, persyaratan, alur, FAQ
-    galeri.ts     daftar dokumentasi kegiatan
-    statistik.ts  data kependudukan & sarana
+  data/         profil & identitas kelurahan (masih statis), plus tipe data
+    site.ts       identitas, kontak, menu, jam layanan  ← statis
+    profil.ts     sejarah, visi & misi, struktur, batas wilayah, program ← statis
+    layanan.ts    katalog layanan, persyaratan, alur, FAQ ← statis
+    berita.ts     tipe Berita + daftar kategori bawaan   ← isinya dari API
+    galeri.ts     tipe Foto + daftar album bawaan        ← isinya dari API
+    statistik.ts  tipe data statistik + bentuk kosongnya ← isinya dari API
+  admin/        panel admin: tata letak, masuk, berita, galeri, statistik
   components/   navbar, footer, layout, ikon, kartu, peta sketsa, dll.
-  pages/        satu berkas per halaman
-  lib/          format tanggal/angka, hook <title>, pemetaan ikon
-  styles/       tokens.css → base.css → layout.css → components.css → pages.css
+  pages/        satu berkas per halaman publik
+  lib/          api.ts (penghubung backend), sumber.ts (cache data), auth.tsx,
+                format tanggal/angka, hook <title>, pemetaan ikon
+  styles/       tokens.css → base.css → layout.css → components.css →
+                pages.css → admin.css
 ```
 
-Untuk mengubah teks atau menambah berita/layanan, cukup sunting berkas di
-`src/data/` — tidak perlu menyentuh komponen.
+Isi yang berubah rutin — **berita, galeri, dan seluruh angka halaman Data** —
+diubah lewat panel admin di `/admin`, bukan dengan menyunting kode. Data
+awalnya ada di `backend/prisma/data-awal.ts` dan dimuat oleh `npm run db:seed`.
+
+Yang masih statis di `src/data/`: identitas & kontak kelurahan (`site.ts`),
+profil dan sejarah (`profil.ts`), serta katalog layanan (`layanan.ts`) — ubah
+langsung di berkasnya.
 
 ## Sumber data
 
@@ -76,22 +105,72 @@ dipublikasikan:
 
 1. **Kontak** (`src/data/site.ts`) — nomor telepon, WhatsApp, surel, alamat
    kantor, koordinat peta, dan jam pelayanan.
-2. **Nama pejabat** (`STRUKTUR` di `src/data/profil.ts`) — jabatannya sudah
-   benar, tetapi belum ada nama pemangkunya.
-3. **Surel** (`src/data/site.ts`) — belum tercantum di mana pun pada sumber
+2. **Surel** (`src/data/site.ts`) — belum tercantum di mana pun pada sumber
    resmi, jadi masih dugaan.
-4. **Nomor WhatsApp** (`src/data/site.ts`) — belum terverifikasi.
-5. **Jam pelayanan** (`JAM_RINGKAS` di `src/data/site.ts`) — belum tercantum
+3. **Nomor WhatsApp** (`src/data/site.ts`) — belum terverifikasi.
+4. **Jam pelayanan** (`JAM_RINGKAS` di `src/data/site.ts`) — belum tercantum
    pada situs resmi.
-6. **Facebook** — poster resmi menyebut akun "Kelurahan Landasanulintengah",
+5. **Facebook** — poster resmi menyebut akun "Kelurahan Landasanulintengah",
    tetapi URL persisnya belum dipastikan sehingga belum dicantumkan.
 
-Alamat kantor, nomor telepon, kode pos, dan akun Instagram **sudah
-terkonfirmasi** dari halaman kontak situs resmi kelurahan.
+## Struktur organisasi
+
+`STRUKTUR` di `src/data/profil.ts` mengikuti papan **Struktur Organisasi
+RT/RW** di kantor kelurahan: Lurah, didampingi Babinkamtibmas dan Babinsa, lalu
+Ketua Forum RT/RW, kemudian 3 RW yang membawahi 16 RT.
+
+**Hanya jabatan yang dicantumkan, tanpa nama pengurus** — nama berganti
+mengikuti surat keputusan yang berlaku, dan situs publik tidak perlu ikut
+menayangkan data pribadi pengurus RT/RW.
+
+Pembagian RT ke tiap RW (RW 001: RT 001, 002, 013, 016 · RW 002: RT 003–006 ·
+RW 003: RT 007–012, 014, 015) cocok persis dengan tabel sebaran penduduk per RT
+pada halaman Data, yang berasal dari portal Kampung KB. Dua sumber berbeda yang
+saling menguatkan.
+
+Susunan perangkat internal kelurahan (Sekretariat serta Seksi Pemerintahan,
+Kesejahteraan Sosial, dan Ekonomi & Pembangunan) sebelumnya ditampilkan di
+halaman ini dan kini digantikan bagan RT/RW. Bila ingin ditampilkan kembali
+sebagai bagan terpisah, datanya ada di riwayat berkas `src/data/profil.ts`.
+
+## Hasil pengecekan silang
+
+Diverifikasi terhadap portal Kampung KB, Wikipedia, situs resmi kelurahan,
+dan Media Center Banjarbaru.
+
+**Terkonfirmasi:** luas 1.818,00 Ha · 16 RT / 3 RW · ± 9 km ke pusat kota ·
+klasifikasi Berkembang · kode pos 70723 · alamat Jl. A. Yani Km. 22,600
+RT 003 RW 002 · telepon (0511) 4705429 · Instagram
+`kelurahan_landasanulintengah` · Lurah H. Faisal Rizal · struktur
+Sekretariat + 3 seksi (Pemerintahan, Kessos, Ekobang).
+
+**Selisih antar sumber — ditampilkan apa adanya, bukan dirapikan:**
+
+| Hal | Sumber A | Sumber B |
+| --- | --- | --- |
+| Jumlah penduduk | 9.063 (Kampung KB) | 7.462 (Wikipedia) |
+| Pencanangan Kampung KB | 21 Nov 2022 (tabel) | 17 Jun 2026 (kepala halaman) |
+| Ejaan nama Lurah | H. Faisal Rizal | H. M. Faisal Riza |
+
+Wikipedia sendiri tidak konsisten: jumlah penduduk keempat kelurahan di Liang
+Anggang di sana (26.383) tak sama dengan total kecamatannya (38.272).
+
+**Sudah dikoreksi:**
+
+- Klaim "penduduk terbanyak kedua setelah Landasan Ulin Utara" — keliru.
+  Menurut Wikipedia urutannya Barat (9.402), Tengah (7.462), Utara (6.864),
+  Selatan (2.655); Utara justru ketiga. Kalimatnya dilunakkan.
+- Lini masa belum memuat pembentukan Kecamatan Liang Anggang lewat Perda Kota
+  Banjarbaru Nomor 4 Tahun 2007 — sudah ditambahkan.
+- Struktur organisasi semula ditulis 4 seksi; yang benar 3 seksi.
+
+**Belum terkonfirmasi:** Perda Kota Banjarbaru Nomor 2 Tahun 2004 sebagai
+dasar pembentukan kelurahan. Klaim ini berasal dari narasi kelurahan sendiri
+dan tidak ditemukan di arsip Perda BPK maupun sumber lain.
 
 ## Berita
 
-Isi `src/data/berita.ts` diambil dari publikasi resmi kelurahan di
+Lima berita awal diambil dari publikasi resmi kelurahan di
 <https://kel-landasanulintengah.banjarbarukota.go.id/>. Setiap entri menyimpan
 `sumber` berisi tautan artikel aslinya, dan tautan itu ikut ditampilkan di
 bawah artikel.
@@ -101,16 +180,18 @@ situs ini dibuat untuk kelurahan yang sama, pemakaiannya wajar — tetapi
 sebaiknya tetap dikonfirmasi ke pengelola situs kelurahan sebelum
 dipublikasikan.
 
-Menambah berita baru: salin satu entri di `BERITA`, taruh fotonya di
-`public/berita/`, lalu isi `foto` dan `sumber`. Bila `foto` dikosongkan,
-gambar bangkitan otomatis dipakai sebagai gantinya.
+Menambah berita baru: lewat `/admin/berita/baru`. Fotonya diunggah dari
+komputer (masuk ke Supabase Storage), atau kolom foto dikosongkan agar gambar
+bangkitan otomatis dipakai sebagai gantinya.
 
 ## Galeri
 
-`src/data/galeri.ts` memuat 15 gambar asli dari sumber yang sama, tersimpan di
+Isi awalnya 15 gambar asli dari sumber yang sama, tersimpan di
 `public/berita/`. Keterangannya ditulis berdasarkan acara dan tanggal
 publikasi aslinya — bukan tafsiran atas isi frame. Tiap entri menyimpan
 `sumber`, dan tautan "publikasi asli" muncul di dalam lightbox.
+
+Menambah dokumentasi: lewat `/admin/galeri`.
 
 Album: **Apel Pagi** (8), **Penilaian Eco Office** (3), **Kesehatan** (2),
 **Pengumuman** (2). Album Pengumuman berisi poster/infografis, bukan foto
@@ -162,6 +243,21 @@ Routing memakai `BrowserRouter`, jadi server perlu mengarahkan semua rute ke
 
 Bila hosting tidak mendukung rewrite (misalnya GitHub Pages tanpa konfigurasi
 tambahan), ganti `BrowserRouter` menjadi `HashRouter` di `src/App.tsx`.
+
+Frontend kini butuh backend agar berita, galeri, dan halaman Data terisi.
+Bila keduanya di-host di alamat berbeda, setel `VITE_API_URL` **sebelum**
+`npm run build` (nilainya ditanam saat build, bukan dibaca saat berjalan), dan
+masukkan domain frontend ke `CORS_ORIGIN` pada `backend/.env`:
+
+```bash
+# kkn/.env
+VITE_API_URL=https://api.kelurahan.example
+```
+
+Panel admin ikut terbawa di build yang sama. Kalau tidak ingin `/admin` bisa
+dijangkau publik, batasi lewat konfigurasi server (mis. `basic_auth` atau
+pembatasan IP di Nginx) — token JWT sudah menjaga API-nya, tetapi halamannya
+sendiri tetap dapat dibuka siapa saja.
 
 ## Aksesibilitas & tampilan
 

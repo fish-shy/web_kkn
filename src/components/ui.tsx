@@ -216,6 +216,42 @@ export function Empty({ title, text }: { title: string; text: string }) {
   )
 }
 
+/* ------------------------------------------------------- Muat & galat API */
+
+/** Ditampilkan selagi data diambil dari API. */
+export function Memuat({ teks = 'Memuat data…' }: { teks?: string }) {
+  return (
+    <div className="empty" role="status" aria-live="polite">
+      <span className="spinner" aria-hidden="true" />
+      <p className="empty__title">{teks}</p>
+    </div>
+  )
+}
+
+/**
+ * Kegagalan mengambil data ditampilkan terus terang beserta tombol coba lagi
+ * — lebih jujur daripada halaman yang diam-diam tampil kosong.
+ */
+export function GalatKotak({
+  pesan,
+  onUlangi,
+}: {
+  pesan: string
+  onUlangi?: () => void
+}) {
+  return (
+    <div className="form-alert form-alert--galat" role="alert">
+      <Icon name="info" />
+      <span style={{ flex: 1 }}>{pesan}</span>
+      {onUlangi && (
+        <button type="button" className="btn btn--ghost btn--sm" onClick={onUlangi}>
+          Coba lagi
+        </button>
+      )}
+    </div>
+  )
+}
+
 /* ------------------------------------------------------------- Pagination */
 
 export function Pagination({

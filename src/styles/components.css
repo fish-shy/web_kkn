@@ -151,6 +151,10 @@
   width: 100%;
 }
 
+.btn--mrg {
+  margin-top : 1rem;
+}
+
 /* Text link with arrow */
 .link-arrow {
   display: inline-flex;
@@ -606,6 +610,42 @@
   flex: none;
   margin-top: 0.1rem;
   color: var(--leaf-700);
+}
+
+.form-alert--galat {
+  align-items: center;
+  background: var(--clay-100);
+  border-color: var(--clay-300);
+  color: var(--clay-700);
+}
+
+.form-alert--galat svg {
+  color: var(--clay-600);
+}
+
+/* --- Spinner ----------------------------------------------------------------- */
+
+.spinner {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin: 0 auto 0.75rem;
+  border: 2.5px solid var(--leaf-200);
+  border-top-color: var(--leaf-600);
+  border-radius: 50%;
+  animation: spinner-putar 0.7s linear infinite;
+}
+
+@keyframes spinner-putar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2s;
+  }
 }
 
 /* --- Pagination -------------------------------------------------------------- */

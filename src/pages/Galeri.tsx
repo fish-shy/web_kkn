@@ -5,8 +5,10 @@ import { usePageMeta } from '../lib/usePageMeta'
 import { Icon } from '../components/Icon'
 import { Thumb } from '../components/Thumb'
 import { GLYPH } from '../lib/glyph'
-import { Empty, Reveal, SectionHead } from '../components/ui'
-import { ALBUM, GALERI, type AlbumNama } from '../data/galeri'
+import { Empty, GalatKotak, Memuat, Reveal, SectionHead } from '../components/ui'
+import { daftarAlbum } from '../data/galeri'
+import { useGaleri } from '../lib/sumber'
+import { srcGambar } from '../lib/api'
 import { tanggalPanjang } from '../lib/format'
 
 export default function Galeri() {
@@ -15,12 +17,16 @@ export default function Galeri() {
     'Dokumentasi kegiatan warga, posyandu, pembangunan, dan program Kelurahan Landasan Ulin Tengah.',
   )
 
-  const [album, setAlbum] = useState<AlbumNama | 'Semua'>('Semua')
+  const { data: galeri, memuat, galat, ulangi } = useGaleri()
+
+  const [album, setAlbum] = useState<string>('Semua')
   const [aktif, setAktif] = useState<number | null>(null)
 
+  const album2 = useMemo(() => daftarAlbum(galeri), [galeri])
+
   const hasil = useMemo(
-    () => GALERI.filter((g) => album === 'Semua' || g.album === album),
-    [album],
+    () => galeri.filter((g) => album === 'Semua' || g.album === album),
+    [galeri, album],
   )
 
   const tutup = useCallback(() => setAktif(null), [])
@@ -58,8 +64,8 @@ export default function Galeri() {
         title="Galeri Kegiatan"
         lead="Rekam jejak kegiatan warga dan program kelurahan dari waktu ke waktu."
         meta={[
-          { icon: 'image', text: `${GALERI.length} dokumentasi` },
-          { icon: 'layers', text: `${ALBUM.length} album` },
+          { icon: 'image', text: `${galeri.length} dokumentasi` },
+          { icon: 'layers', text: `${album2.length} album` },
         ]}
       />
 
@@ -88,7 +94,7 @@ export default function Galeri() {
             >
               Semua
             </button>
-            {ALBUM.map((a) => (
+            {album2.map((a) => (
               <button
                 key={a}
                 type="button"
@@ -104,7 +110,11 @@ export default function Galeri() {
             ))}
           </div>
 
-          {hasil.length === 0 ? (
+          {galat && <GalatKotak pesan={galat} onUlangi={ulangi} />}
+
+          {memuat && galeri.length === 0 ? (
+            <Memuat teks="Memuat dokumentasi…" />
+          ) : hasil.length === 0 ? (
             <Empty
               title="Belum ada dokumentasi"
               text="Album ini belum memiliki dokumentasi. Silakan pilih album lain."
@@ -121,7 +131,7 @@ export default function Galeri() {
                   >
                     <Thumb
                       seed={g.id + g.judul}
-                      src={g.foto}
+                      src={srcGambar(g.foto)}
                       alt={g.judul}
                       glyph={GLYPH[g.album]}
                     />
@@ -163,7 +173,7 @@ export default function Galeri() {
           <div className="lightbox__frame" onClick={(e) => e.stopPropagation()}>
             <Thumb
               seed={foto.id + foto.judul}
-              src={foto.foto}
+              src={srcGambar(foto.foto)}
               alt={foto.judul}
               glyph={GLYPH[foto.album]}
             />
@@ -171,10 +181,15 @@ export default function Galeri() {
               <span className="lightbox__title">{foto.judul}</span>
               <span className="lightbox__sub">
                 {foto.album} · {tanggalPanjang(foto.tanggal)} ·{' '}
-                {(aktif ?? 0) + 1} dari {hasil.length} ·{' '}
-                <a href={foto.sumber} target="_blank" rel="noreferrer">
-                  publikasi asli
-                </a>
+                {(aktif ?? 0) + 1} dari {hasil.length}
+                {foto.sumber && (
+                  <>
+                    {' · '}
+                    <a href={foto.sumber} target="_blank" rel="noreferrer">
+                      publikasi asli
+                    </a>
+                  </>
+                )}
               </span>
             </div>
 

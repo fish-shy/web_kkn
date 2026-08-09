@@ -1,26 +1,78 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { PageHero } from '../components/PageHero'
 import { usePageMeta } from '../lib/usePageMeta'
 import { Icon } from '../components/Icon'
 import { Thumb } from '../components/Thumb'
 import { GLYPH } from '../lib/glyph'
-import { Reveal } from '../components/ui'
-import { beritaTerkait, cariBerita } from '../data/berita'
+import { GalatKotak, Memuat, Reveal } from '../components/ui'
+import type { Berita } from '../data/berita'
 import { SITE } from '../data/site'
+import { GalatApi, api, pesanGalat, srcGambar } from '../lib/api'
 import { tanggalLengkap, tanggalPendek } from '../lib/format'
 import NotFound from './NotFound'
 
 export default function BeritaDetail() {
   const { slug = '' } = useParams()
-  const berita = cariBerita(slug)
   const [disalin, setDisalin] = useState(false)
 
-  usePageMeta(berita?.judul ?? 'Berita tidak ditemukan', berita?.ringkas)
+  /*
+   * Hasil disimpan bersama slug yang menghasilkannya. Dari situ status "sedang
+   * memuat" bisa diturunkan — tidak perlu flag terpisah yang di-set di dalam
+   * effect — sekaligus mencegah isi berita lama sempat terlihat saat pindah
+   * dari satu berita ke berita lain.
+   */
+  const [hasil, setHasil] = useState<{
+    slug: string
+    isi?: { berita: Berita; terkait: Berita[] }
+    galat?: string
+    hilang?: boolean
+  } | null>(null)
+  const [putaran, setPutaran] = useState(0)
 
-  if (!berita) return <NotFound konteks="berita" />
+  useEffect(() => {
+    const ac = new AbortController()
 
-  const terkait = beritaTerkait(berita.slug, berita.kategori)
+    api
+      .beritaSatu(slug, ac.signal)
+      .then((isi) => setHasil({ slug, isi }))
+      .catch((e) => {
+        if (ac.signal.aborted) return
+        // 404 diperlakukan sebagai halaman tidak ada, bukan galat jaringan.
+        if (e instanceof GalatApi && e.status === 404) {
+          setHasil({ slug, hilang: true })
+        } else {
+          setHasil({ slug, galat: pesanGalat(e) })
+        }
+      })
+
+    return () => ac.abort()
+  }, [slug, putaran])
+
+  const siap = hasil?.slug === slug ? hasil : null
+  const berita = siap?.isi?.berita
+  usePageMeta(berita?.judul ?? 'Berita', berita?.ringkas)
+
+  if (siap?.hilang) return <NotFound konteks="berita" />
+
+  if (!berita) {
+    return (
+      <section className="section">
+        <div className="container">
+          {siap?.galat ? (
+            <GalatKotak
+              pesan={siap.galat}
+              onUlangi={() => setPutaran((n) => n + 1)}
+            />
+          ) : (
+            <Memuat teks="Memuat berita…" />
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  const terkait = siap?.isi?.terkait ?? []
   const url = typeof window !== 'undefined' ? window.location.href : ''
 
   const salin = async () => {
@@ -56,7 +108,7 @@ export default function BeritaDetail() {
             <article>
               <Thumb
                 seed={berita.slug}
-                src={berita.foto}
+                src={srcGambar(berita.foto)}
                 alt={berita.judul}
                 glyph={GLYPH[berita.kategori]}
                 className="article__cover"
@@ -159,7 +211,7 @@ export default function BeritaDetail() {
                     <Link key={t.slug} to={`/berita/${t.slug}`}>
                       <Thumb
                         seed={t.slug}
-                        src={t.foto}
+                        src={srcGambar(t.foto)}
                         alt={t.judul}
                         glyph={GLYPH[t.kategori]}
                         className="aside-list__thumb"

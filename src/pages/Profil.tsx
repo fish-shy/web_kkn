@@ -7,6 +7,7 @@ import { KAMPUNG_KB, SITE, SUMBER_DATA } from '../data/site'
 import {
   BATAS,
   DATA_POKOK,
+  INOVASI,
   MISI,
   POTENSI,
   RENCANA_KERJA,
@@ -14,7 +15,7 @@ import {
   STRUKTUR,
   VISI,
 } from '../data/profil'
-import { LEMBAGA } from '../data/statistik'
+import { useStatistik } from '../lib/sumber'
 import { angka } from '../lib/format'
 
 export default function Profil() {
@@ -22,6 +23,9 @@ export default function Profil() {
     'Profil Kelurahan',
     'Sejarah, visi dan misi, struktur organisasi, batas wilayah, serta data pokok Kelurahan Landasan Ulin Tengah.',
   )
+
+  const { data: statistik } = useStatistik()
+  const lembaga = statistik.lembaga
 
   return (
     <>
@@ -111,28 +115,46 @@ export default function Profil() {
         <div className="container">
           <SectionHead
             eyebrow="Organisasi"
-            title="Struktur organisasi kelurahan"
-            lead="Susunan perangkat kelurahan beserta pembagian tugas pokoknya."
+            title="Struktur organisasi RT/RW"
+            lead={`Susunan kepengurusan lingkungan: ${STRUKTUR.rw.length} rukun warga yang membawahi ${STRUKTUR.rw.reduce((n, r) => n + r.rt.length, 0)} rukun tetangga.`}
           />
 
           <Reveal>
             <div className="panel panel--cream">
               <div className="org">
-                <div className="org__node org__node--lead">
-                  <span className="org__role">{STRUKTUR.lurah.role}</span>
-                  <span className="org__name">{STRUKTUR.lurah.name}</span>
-                </div>
-                <span className="org__connector" />
-                <div className="org__node org__node--alt">
-                  <span className="org__role">{STRUKTUR.sekretaris.role}</span>
-                  <span className="org__name">{STRUKTUR.sekretaris.name}</span>
+                <div className="org__puncak">
+                  <div className="org__pendamping">
+                    {STRUKTUR.pendamping[0].role}
+                    <small>{STRUKTUR.pendamping[0].note}</small>
+                  </div>
+
+                  <div className="org__node org__node--lead">
+                    <span className="org__role">{STRUKTUR.lurah.role}</span>
+                  </div>
+
+                  <div className="org__pendamping">
+                    {STRUKTUR.pendamping[1].role}
+                    <small>{STRUKTUR.pendamping[1].note}</small>
+                  </div>
                 </div>
 
-                <div className="org__branch">
-                  {STRUKTUR.seksi.map((s) => (
-                    <div key={s.role} className="org__leaf">
-                      {s.role}
-                      <small>{s.note}</small>
+                <span className="org__connector" />
+
+                <div className="org__node org__node--alt">
+                  <span className="org__role">{STRUKTUR.forum.role}</span>
+                  <span className="org__name">{STRUKTUR.forum.note}</span>
+                </div>
+
+                <div className="org__branch org__branch--tiga">
+                  {STRUKTUR.rw.map((r) => (
+                    <div key={r.nama} className="org__leaf">
+                      Ketua {r.nama}
+                      <small>{r.rt.length} rukun tetangga</small>
+                      <ul className="org__rt">
+                        {r.rt.map((rt) => (
+                          <li key={rt}>{rt}</li>
+                        ))}
+                      </ul>
                     </div>
                   ))}
                 </div>
@@ -142,8 +164,9 @@ export default function Profil() {
                 className="form-note"
                 style={{ marginTop: '1.75rem', textAlign: 'center' }}
               >
-                Nama pejabat pada tiap jabatan menyesuaikan surat keputusan yang
-                berlaku. Hubungi kantor kelurahan untuk informasi terbaru.
+                Bagan ini memuat jabatannya saja. Nama pengurus pada tiap
+                jabatan menyesuaikan surat keputusan yang berlaku — hubungi
+                kantor kelurahan untuk informasi terbaru.
               </p>
             </div>
           </Reveal>
@@ -263,14 +286,38 @@ export default function Profil() {
           />
 
           <div className="grid-4">
-            {LEMBAGA.map((l, i) => (
-              <Reveal key={l.name} delay={(i % 4) * 80}>
+            {lembaga.map((l, i) => (
+              <Reveal key={l.nama} delay={(i % 4) * 80}>
                 <div className="stat-card">
                   <span className="icon-tile stat-card__icon">
                     <Icon name="users" />
                   </span>
                   <span className="stat__value">{angka(l.jml)}</span>
-                  <span className="stat__label">{l.name}</span>
+                  <span className="stat__label">{l.nama}</span>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --------------------------------------------------------- INOVASI */}
+      <section className="section">
+        <div className="container">
+          <SectionHead
+            eyebrow="Inovasi"
+            title="Program inovasi kelurahan"
+            lead="Dipaparkan pada Lomba Kelurahan Tingkat Kota Banjarbaru, 19 Maret 2024, bersama Tim Penggerak PKK, Karang Taruna, dan Forum RT/RW."
+          />
+          <div className="grid-3">
+            {INOVASI.map((v, i) => (
+              <Reveal key={v.akronim} delay={(i % 3) * 80}>
+                <div className="card" style={{ height: '100%' }}>
+                  <div className="card__body">
+                    <span className="badge badge--solid">{v.akronim}</span>
+                    <h3 className="card__title">{v.kepanjangan}</h3>
+                    <p className="card__text">{v.teks}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}

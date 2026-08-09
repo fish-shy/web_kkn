@@ -7,14 +7,31 @@ import { GLYPH } from '../lib/glyph'
 import { ArrowLink, Reveal, SectionHead, Stat } from '../components/ui'
 import { SITE, STAT_UTAMA } from '../data/site'
 import { PROGRAM, TATA_RUANG } from '../data/profil'
-import { BERITA_TERBARU } from '../data/berita'
-import { GALERI_BERANDA } from '../data/galeri'
-import { tanggalPanjang } from '../lib/format'
+import { useBerita, useGaleri, useStatistik } from '../lib/sumber'
+import { srcGambar } from '../lib/api'
+import { angka, tanggalPanjang } from '../lib/format'
 
 export default function Beranda() {
   usePageMeta('Beranda', SITE.description)
 
-  const sorotan = BERITA_TERBARU.slice(0, 3)
+  const { data: berita } = useBerita()
+  const { data: galeri } = useGaleri()
+  const { data: statistik } = useStatistik()
+
+  const sorotan = berita.slice(0, 3)
+  const strip = galeri.slice(0, 8)
+
+  // Angka hero mengikuti data yang diatur admin; STAT_UTAMA hanya dipakai
+  // sebagai tampilan sementara selagi statistik belum selesai dimuat.
+  const GU = statistik.gambaranUmum
+  const stat = GU.penduduk
+    ? [
+        { value: GU.luasWilayah, label: 'Luas Wilayah' },
+        { value: angka(GU.penduduk), label: 'Jiwa Penduduk' },
+        { value: angka(GU.kk), label: 'Kepala Keluarga' },
+        { value: GU.rtRw, label: 'Rukun Tetangga / RW' },
+      ]
+    : STAT_UTAMA
 
   return (
     <>
@@ -52,7 +69,7 @@ export default function Beranda() {
           </div>
 
           <div className="hero-card__stats ">
-            {STAT_UTAMA.map((s) => (
+            {stat.map((s) => (
               <Stat key={s.label} value={s.value} label={s.label} />
             ))}
           </div>
@@ -234,7 +251,7 @@ export default function Beranda() {
                 >
                   <Thumb
                     seed={b.slug}
-                    src={b.foto}
+                    src={srcGambar(b.foto)}
                     alt={b.judul}
                     glyph={GLYPH[b.kategori]}
                     ratio="16 / 10"
@@ -267,10 +284,10 @@ export default function Beranda() {
           />
 
           <div className="gal-strip">
-            {GALERI_BERANDA.map((g, i) => (
+            {strip.map((g, i) => (
               <Reveal key={g.id} delay={(i % 4) * 70}>
                 <Link to="/galeri" className="gal-tile" title={g.judul}>
-                  <img src={g.foto} alt={g.judul} loading="lazy" />
+                  <img src={srcGambar(g.foto)} alt={g.judul} loading="lazy" />
                   <span className="gal-tile__cap">{g.ringkas}</span>
                 </Link>
               </Reveal>
