@@ -234,12 +234,20 @@ Forms, atau backend sendiri.
 ## Catatan penerapan (deploy)
 
 Routing memakai `BrowserRouter`, jadi server perlu mengarahkan semua rute ke
-`index.html` supaya tautan langsung seperti `/profil` tidak menghasilkan 404:
+`index.html`. Hasil build hanya berisi **satu** `index.html` di akar — tidak
+ada berkas `/admin`, `/profil`, dan seterusnya. Tanpa pengalihan itu, server
+statis hanya bisa menjawab 404 untuk tautan langsung maupun saat halaman
+di-refresh.
 
+- **Vercel** — sudah disiapkan di [`vercel.json`](vercel.json). Pastikan
+  **Root Directory** project disetel ke `kkn`, karena repo ini memuat
+  `backend/` juga.
 - **Netlify** — buat `public/_redirects` berisi `/* /index.html 200`
-- **Vercel** — tambahkan rewrite `{"source": "/(.*)", "destination": "/index.html"}`
 - **Apache** — `FallbackResource /index.html`
 - **Nginx** — `try_files $uri $uri/ /index.html;`
+
+Pengalihan ini hanya berlaku bila tidak ada berkas nyata yang cocok, jadi
+`/assets/…` tetap dilayani apa adanya.
 
 Bila hosting tidak mendukung rewrite (misalnya GitHub Pages tanpa konfigurasi
 tambahan), ganti `BrowserRouter` menjadi `HashRouter` di `src/App.tsx`.
