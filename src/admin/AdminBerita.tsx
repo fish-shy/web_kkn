@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Icon } from '../components/Icon'
 import { GalatKotak, Memuat } from '../components/ui'
 import { usePageMeta } from '../lib/usePageMeta'
@@ -14,7 +14,19 @@ export default function AdminBerita() {
   const { data: berita, memuat, galat, ulangi } = useBerita()
   const [q, setQ] = useState('')
   const [menghapus, setMenghapus] = useState<string | null>(null)
-  const [kabar, setKabar] = useKabar()
+  // Pesan yang dibawa dari formulir berita setelah menyimpan.
+  const lokasi = useLocation()
+  const [kabar, setKabar] = useKabar(
+    (lokasi.state as { kabar?: Kabar } | null)?.kabar ?? null,
+  )
+
+  // Bersihkan state rute dari riwayat peramban agar pesannya tidak muncul
+  // lagi saat halaman ini dimuat ulang. Kolom milik react-router (`key`,
+  // `idx`) dibiarkan utuh supaya navigasinya tidak kacau.
+  useEffect(() => {
+    const riwayat = window.history.state
+    if (riwayat?.usr) window.history.replaceState({ ...riwayat, usr: null }, '')
+  }, [lokasi.key])
 
   const hasil = useMemo(() => {
     const kunci = q.trim().toLowerCase()
@@ -55,7 +67,7 @@ export default function AdminBerita() {
         }
       />
 
-      <Kabar kabar={kabar} />
+      <Kabar kabar={kabar} mengambang onTutup={() => setKabar(null)} />
       {galat && <GalatKotak pesan={galat} onUlangi={ulangi} />}
 
       <div className="search" style={{ maxWidth: '22rem', marginBottom: '1.25rem' }}>

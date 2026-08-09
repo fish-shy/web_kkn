@@ -115,19 +115,27 @@ export default function FormBerita() {
     }
 
     try {
-      if (baru) {
-        const hasil = await api.beritaTambah(kiriman)
-        segarkan('berita')
-        navigate(`/admin/berita/${hasil.id}`, { replace: true })
-        setKabar({ jenis: 'sukses', teks: 'Berita berhasil ditambahkan.' })
-      } else {
-        await api.beritaUbah(id!, kiriman)
-        segarkan('berita')
-        setKabar({ jenis: 'sukses', teks: 'Perubahan tersimpan.' })
-      }
+      if (baru) await api.beritaTambah(kiriman)
+      else await api.beritaUbah(id!, kiriman)
+
+      segarkan('berita')
+
+      // Kembali ke daftar setelah menyimpan: hasilnya langsung terlihat di
+      // sana, dan tidak ada keraguan apakah simpanannya jadi atau tidak.
+      // Pesan sukses dibawa lewat state rute supaya tampil di halaman tujuan.
+      navigate('/admin/berita', {
+        replace: true,
+        state: {
+          kabar: {
+            jenis: 'sukses' as const,
+            teks: baru
+              ? `Berita "${isian.judul}" berhasil diterbitkan.`
+              : `Perubahan pada "${isian.judul}" tersimpan.`,
+          },
+        },
+      })
     } catch (err) {
       setKabar({ jenis: 'galat', teks: pesanGalat(err) })
-    } finally {
       setSibuk(false)
     }
   }
@@ -156,7 +164,7 @@ export default function FormBerita() {
         }
       />
 
-      <Kabar kabar={kabar} />
+      <Kabar kabar={kabar} mengambang onTutup={() => setKabar(null)} />
 
       <div className="adm-kolom2">
         <KartuAdmin judul="Keterangan berita" ikon="file-text">

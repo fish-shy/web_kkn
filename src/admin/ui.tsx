@@ -7,24 +7,55 @@ import { api, pesanGalat, srcGambar } from '../lib/api'
 
 export type Kabar = { jenis: 'sukses' | 'galat'; teks: string } | null
 
-/** Pesan hasil aksi — hijau untuk berhasil, merah bata untuk gagal. */
-export function Kabar({ kabar }: { kabar: Kabar }) {
+/**
+ * Pesan hasil aksi — hijau untuk berhasil, merah bata untuk gagal.
+ *
+ * Mode `mengambang` menempelkannya di sudut layar. Itu yang dipakai halaman
+ * admin: tombol simpan tersebar sampai ke bawah halaman, jadi pesan yang
+ * hanya muncul di puncak halaman sering tak terlihat sama sekali oleh yang
+ * menekannya.
+ */
+export function Kabar({
+  kabar,
+  onTutup,
+  mengambang = false,
+}: {
+  kabar: Kabar
+  onTutup?: () => void
+  mengambang?: boolean
+}) {
   if (!kabar) return null
-  return (
+
+  const isi = (
     <div
       className={`form-alert${kabar.jenis === 'galat' ? ' form-alert--galat' : ''}`}
       role={kabar.jenis === 'galat' ? 'alert' : 'status'}
-      style={{ marginBottom: '1rem' }}
+      style={mengambang ? undefined : { marginBottom: '1rem' }}
     >
       <Icon name={kabar.jenis === 'galat' ? 'info' : 'check-circle'} />
-      <span>{kabar.teks}</span>
+      <span style={{ flex: 1 }}>{kabar.teks}</span>
+      {onTutup && (
+        <button
+          type="button"
+          className="adm-kabar__tutup"
+          onClick={onTutup}
+          aria-label="Tutup pesan"
+        >
+          <Icon name="close" width={14} height={14} />
+        </button>
+      )}
     </div>
   )
+
+  return mengambang ? <div className="adm-kabar">{isi}</div> : isi
 }
 
-/** Bungkus useState + penghapusan otomatis setelah beberapa detik. */
-export function useKabar(): [Kabar, (k: Kabar) => void] {
-  const [kabar, set] = useState<Kabar>(null)
+/**
+ * Bungkus useState + penghapusan otomatis setelah beberapa detik.
+ * `awal` dipakai halaman yang menerima pesan bawaan dari halaman sebelumnya.
+ */
+export function useKabar(awal: Kabar = null): [Kabar, (k: Kabar) => void] {
+  const [kabar, set] = useState<Kabar>(awal)
   const timer = useRef<number | undefined>(undefined)
 
   const pasang = (k: Kabar) => {

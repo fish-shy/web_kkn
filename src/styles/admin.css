@@ -21,13 +21,21 @@
 
 /* --- Sidebar ---------------------------------------------------------------- */
 
+/*
+ * Sidebar sengaja terang, bukan hijau tua. Panel ini alat kerja yang dipakai
+ * lama, dan slab gelap di samping area kerja krem justru memberat serta
+ * memaksa tiap teks di dalamnya melawan aturan warna global (mis. `strong`
+ * yang secara bawaan berwarna tinta gelap). Warna hijau tetap hadir, tapi
+ * sebagai penanda menu aktif — bukan sebagai latar.
+ */
 .adm-sisi {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.35rem 1rem;
-  background: var(--forest-900);
-  color: var(--on-dark);
+  gap: 1.35rem;
+  padding: 1.35rem 0.9rem;
+  background: var(--paper);
+  border-right: 1px solid var(--line);
+  color: var(--ink-700);
   position: sticky;
   top: 0;
   height: 100vh;
@@ -38,14 +46,15 @@
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0 0.35rem 1.1rem;
-  border-bottom: 1px solid var(--on-dark-line);
+  padding: 0 0.4rem 1.1rem;
+  border-bottom: 1px solid var(--line-soft);
 }
 
 .adm-sisi__merek img {
   border-radius: var(--r-sm);
   object-fit: cover;
   flex: none;
+  border: 1px solid var(--line);
 }
 
 .adm-sisi__merek span {
@@ -55,14 +64,16 @@
   min-width: 0;
 }
 
+/* Warna ditulis tegas: `strong` di base.css punya warna sendiri. */
 .adm-sisi__merek strong {
   font-family: var(--font-display);
   font-size: 0.95rem;
+  color: var(--ink-900);
 }
 
 .adm-sisi__merek small {
   font-size: 0.72rem;
-  color: var(--on-dark-2);
+  color: var(--ink-400);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -77,33 +88,43 @@
 .adm-nav__item {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   width: 100%;
-  padding: 0.6rem 0.75rem;
+  padding: 0.6rem 0.7rem;
   border: none;
   border-radius: var(--r-sm);
   background: transparent;
-  color: var(--on-dark-2);
+  color: var(--ink-500);
   font: inherit;
   font-size: 0.86rem;
-  font-weight: 500;
+  font-weight: 600;
   text-align: left;
   cursor: pointer;
   transition: background 0.16s var(--ease), color 0.16s var(--ease);
 }
 
+.adm-nav__item svg {
+  flex: none;
+  color: var(--ink-400);
+  transition: color 0.16s var(--ease);
+}
+
 .adm-nav__item:hover {
-  background: var(--on-dark-fill);
-  color: var(--on-dark);
+  background: var(--cream-100);
+  color: var(--ink-900);
+}
+
+.adm-nav__item:hover svg {
+  color: var(--leaf-700);
 }
 
 .adm-nav__item.active {
-  background: var(--leaf-600);
-  color: #fff;
+  background: var(--leaf-100);
+  color: var(--forest-800);
 }
 
-.adm-nav__item svg {
-  flex: none;
+.adm-nav__item.active svg {
+  color: var(--leaf-700);
 }
 
 .adm-sisi__kaki {
@@ -112,19 +133,32 @@
   flex-direction: column;
   gap: 0.15rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--on-dark-line);
+  border-top: 1px solid var(--line-soft);
+}
+
+/* Keluar itu tindakan merusak sesi — dibedakan warnanya saat disentuh. */
+.adm-nav__item--keluar:hover {
+  background: var(--clay-100);
+  color: var(--clay-700);
+}
+
+.adm-nav__item--keluar:hover svg {
+  color: var(--clay-600);
 }
 
 .adm-sisi__akun {
   margin-top: 0.5rem;
-  padding: 0 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--r-sm);
+  background: var(--cream-50);
   font-size: 0.73rem;
-  color: var(--on-dark-3);
+  color: var(--ink-400);
   line-height: 1.5;
 }
 
 .adm-sisi__akun strong {
-  color: var(--on-dark-2);
+  display: block;
+  color: var(--ink-700);
 }
 
 /* --- Area kerja ------------------------------------------------------------- */
@@ -163,6 +197,62 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+/* --- Kabar mengambang -------------------------------------------------------- */
+
+.adm-kabar {
+  position: fixed;
+  right: clamp(1rem, 2vw, 1.75rem);
+  bottom: clamp(1rem, 2vw, 1.75rem);
+  z-index: 60;
+  max-width: min(26rem, calc(100vw - 2rem));
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--r-sm);
+  animation: kabar-masuk 0.22s var(--ease-out);
+}
+
+.adm-kabar .form-alert {
+  align-items: center;
+  background: var(--paper);
+  border-color: var(--leaf-400);
+}
+
+.adm-kabar .form-alert--galat {
+  background: var(--paper);
+  border-color: var(--clay-500);
+}
+
+.adm-kabar__tutup {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  border-radius: var(--r-xs);
+  background: transparent;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.adm-kabar__tutup:hover {
+  opacity: 1;
+  background: var(--cream-100);
+}
+
+@keyframes kabar-masuk {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adm-kabar {
+    animation: none;
+  }
 }
 
 /* --- Kartu ------------------------------------------------------------------ */

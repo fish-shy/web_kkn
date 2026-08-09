@@ -72,18 +72,27 @@ function muat(kunci: Kunci) {
     )
 }
 
-/** Tandai data perlu diambil ulang. Tanpa argumen: seluruh entri. */
+/** Tandai data perlu diambil ulang, lalu langsung ambil ulang. */
 export function segarkan(kunci?: Kunci) {
-  for (const k of kunci ? [kunci] : [...toko.keys()]) {
+  const target = kunci ? [kunci] : [...toko.keys()]
+
+  for (const k of target) {
     const e = toko.get(k)
     if (e) toko.set(k, { ...e, basi: true })
   }
-  for (const f of pendengar) f()
+
+  // Pengambilan ulang dijalankan langsung dari sini, bukan menunggu effect
+  // komponen ikut berjalan lagi. Dengan begitu penyegaran tidak bergantung
+  // pada urutan render React, dan tetap bekerja walau tidak ada komponen yang
+  // sedang menyimak kunci tersebut.
+  for (const k of target) muat(k)
 }
 
 export type Hasil<T> = {
   data: T
   memuat: boolean
+  /** Data sudah pernah tiba dari server — `data` bukan sekadar nilai awal. */
+  siap: boolean
   galat: string | null
   ulangi: () => void
 }
@@ -91,13 +100,21 @@ export type Hasil<T> = {
 function useSumber<T>(kunci: Kunci, awal: T): Hasil<T> {
   const entri = useSyncExternalStore(langgan, () => toko.get(kunci))
 
+  // Bergantung pada `kunci` saja. `entri` sengaja tidak ikut jadi dependensi:
+  // `muat` sudah aman dipanggil berulang, dan penyegaran dipicu langsung oleh
+  // `segarkan` — jadi permintaan pertama tidak pernah bergantung pada kapan
+  // notifikasi penyimpanan sempat memicu render ulang.
   useEffect(() => {
     muat(kunci)
-  }, [kunci, entri])
+  }, [kunci])
 
   return {
     data: (entri?.data as T | undefined) ?? awal,
-    memuat: entri?.sibuk ?? true,
+    // Sebelum entri ada sama sekali, statusnya tetap "memuat": permintaan
+    // pertamanya baru akan dijalankan effect di atas.
+    memuat: entri ? entri.sibuk : true,
+    /** Data sudah pernah tiba dari server, bukan sekadar nilai awal. */
+    siap: entri?.data !== undefined,
     galat: entri?.galat ?? null,
     ulangi: () => segarkan(kunci),
   }

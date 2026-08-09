@@ -162,7 +162,7 @@ export default function AdminStatistik() {
         ket="Semua angka dan teks pada halaman Data diatur di sini. Tiap bagian disimpan terpisah."
       />
 
-      <Kabar kabar={kabar} />
+      <Kabar kabar={kabar} mengambang onTutup={() => setKabar(null)} />
       {galat && <GalatKotak pesan={galat} onUlangi={ulangi} />}
 
       {/* ------------------------------------------------- Gambaran Umum */}

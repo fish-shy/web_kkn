@@ -19,29 +19,34 @@ export default function Dasbor() {
 
   const GU = statistik.data.gambaranUmum
 
+  // `siap` menahan angkanya sampai data benar-benar tiba. Tanpa itu kartu
+  // sempat memamerkan "0" — yang terbaca sebagai fakta, padahal artinya
+  // "belum tahu".
   const angkaKartu: { ikon: IconName; nilai: string; label: string; to: string }[] =
     [
       {
         ikon: 'file-text',
-        nilai: angka(berita.data.length),
+        nilai: berita.siap ? angka(berita.data.length) : '—',
         label: 'Berita terbit',
         to: '/admin/berita',
       },
       {
         ikon: 'image',
-        nilai: angka(galeri.data.length),
+        nilai: galeri.siap ? angka(galeri.data.length) : '—',
         label: 'Foto di galeri',
         to: '/admin/galeri',
       },
       {
         ikon: 'users',
-        nilai: angka(GU.penduduk),
+        nilai: statistik.siap ? angka(GU.penduduk) : '—',
         label: 'Jiwa penduduk tercatat',
         to: '/admin/statistik',
       },
       {
         ikon: 'building',
-        nilai: angka(jumlah(statistik.data.pendudukRt, (r) => r.kk)),
+        nilai: statistik.siap
+          ? angka(jumlah(statistik.data.pendudukRt, (r) => r.kk))
+          : '—',
         label: 'KK pada tabel per RT',
         to: '/admin/statistik',
       },
@@ -90,7 +95,9 @@ export default function Dasbor() {
             </Link>
           }
         >
-          {berita.data.length === 0 ? (
+          {!berita.siap ? (
+            <p className="form-note">Memuat…</p>
+          ) : berita.data.length === 0 ? (
             <p className="form-note">Belum ada berita.</p>
           ) : (
             <ul className="adm-daftar">
@@ -118,7 +125,9 @@ export default function Dasbor() {
             </Link>
           }
         >
-          {galeri.data.length === 0 ? (
+          {!galeri.siap ? (
+            <p className="form-note">Memuat…</p>
+          ) : galeri.data.length === 0 ? (
             <p className="form-note">Belum ada foto.</p>
           ) : (
             <div className="adm-galeri-mini">

@@ -116,7 +116,7 @@ export default function AdminGaleri() {
         ket={`${galeri.length} dokumentasi dalam ${album.length} album.`}
       />
 
-      <Kabar kabar={kabar} />
+      <Kabar kabar={kabar} mengambang onTutup={() => setKabar(null)} />
       {galat && <GalatKotak pesan={galat} onUlangi={ulangi} />}
 
       <KartuAdmin

@@ -54,7 +54,11 @@ export default function AdminLayout() {
             <Icon name="external" width={17} height={17} />
             Lihat situs
           </NavLink>
-          <button type="button" className="adm-nav__item" onClick={keluar}>
+          <button
+            type="button"
+            className="adm-nav__item adm-nav__item--keluar"
+            onClick={keluar}
+          >
             <Icon name="arrow-left" width={17} height={17} />
             Keluar
           </button>
