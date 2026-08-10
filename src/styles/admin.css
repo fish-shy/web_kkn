@@ -163,10 +163,16 @@
 
 /* --- Area kerja ------------------------------------------------------------- */
 
+/*
+ * Tanpa batas lebar: ini area kerja, bukan halaman baca. Tabel statistik dan
+ * daftar berita justru lebih terbaca bila memakai seluruh layar, dan panel
+ * yang berhenti di tengah menyisakan ruang kosong yang sia-sia di monitor
+ * lebar.
+ */
 .adm-isi {
-  padding: 2rem 2rem 4rem;
-  max-width: 78rem;
+  padding: 2rem clamp(1.1rem, 2.2vw, 2.5rem) 4rem;
   width: 100%;
+  min-width: 0;
 }
 
 .adm-head {
