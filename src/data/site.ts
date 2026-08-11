@@ -35,6 +35,7 @@ export const NAV: NavItem[] = [
   { label: 'Profil', to: '/profil' },
   { label: 'Berita', to: '/berita' },
   { label: 'Galeri', to: '/galeri' },
+  { label: 'Edukasi Sampah', to: '/edukasi-sampah' },
   { label: 'Kontak', to: '/kontak' },
 ]
 

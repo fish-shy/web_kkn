@@ -235,6 +235,38 @@ const PATHS = {
       <path d="M15.2 8.8l-1.7 4.7-4.7 1.7 1.7-4.7 4.7-1.7z" />
     </>
   ),
+
+  /* --- Pengelolaan sampah --- */
+  recycle: (
+    <>
+      <path d="M4.5 12a7.5 7.5 0 0112.6-5.5" />
+      <path d="M17.6 3.4v3.4h-3.4" />
+      <path d="M19.5 12a7.5 7.5 0 01-12.6 5.5" />
+      <path d="M6.4 20.6v-3.4h3.4" />
+    </>
+  ),
+  trash: (
+    <>
+      <path d="M4 7h16" />
+      <path d="M9 7V5.6A1.6 1.6 0 0110.6 4h2.8A1.6 1.6 0 0115 5.6V7" />
+      <path d="M6.2 7l.9 12.3A1.8 1.8 0 008.9 21h6.2a1.8 1.8 0 001.8-1.7L17.8 7" />
+      <path d="M10.2 11v6M13.8 11v6" />
+    </>
+  ),
+  battery: (
+    <>
+      <rect x="3" y="7.8" width="14.5" height="8.4" rx="2.2" />
+      <path d="M20.4 11.2v1.6" />
+      <path d="M6.6 12h4.6" />
+      <path d="M8.9 9.7v4.6" />
+    </>
+  ),
+  award: (
+    <>
+      <circle cx="12" cy="9" r="5.2" />
+      <path d="M8.7 13.5L7.6 21l4.4-2.4L16.4 21l-1.1-7.5" />
+    </>
+  ),
 } as const
 
 type Props = SVGProps<SVGSVGElement> & { name: IconName }

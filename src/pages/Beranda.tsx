@@ -5,7 +5,7 @@ import { MapSketch } from '../components/MapSketch'
 import { Thumb } from '../components/Thumb'
 import { GLYPH } from '../lib/glyph'
 import { ArrowLink, Reveal, SectionHead, Stat } from '../components/ui'
-import { SITE, STAT_UTAMA } from '../data/site'
+import { KAMPUNG_KB, SITE, STAT_UTAMA } from '../data/site'
 import { PROGRAM, TATA_RUANG } from '../data/profil'
 import { useBerita, useGaleri, useStatistik } from '../lib/sumber'
 import { srcGambar } from '../lib/api'
@@ -41,7 +41,7 @@ export default function Beranda() {
           <div className="hero-card__top">
             <div className="hero-card__main">
               <span className="eyebrow eyebrow--light">
-                {SITE.kecamatan} · {SITE.kota}
+                {SITE.kota} · {SITE.kecamatan}
               </span>
               <h1 className="hero-card__title">
                 Kelurahan
@@ -49,12 +49,12 @@ export default function Beranda() {
                 Landasan Ulin Tengah
               </h1>
               <p className="hero-card__lead">
-                Menyajikan informasi yang dibutuhkan warga: persyaratan layanan,
-                agenda kegiatan, sampai data wilayah — terbuka dan mudah diakses
-                kapan saja.
+                Mewujudkan masyarakat yang sejahtera, sehat, dan mandiri.
+                Jelajahi informasi wilayah, layanan pemerintahan, hingga potensi
+                UMKM warga dalam satu portal digital yang terintegrasi.
               </p>
               <div className="hero-card__actions">
-                <Link to="/profil" className="btn btn--primary btn--lg">
+                <Link to="/profil" className="btn btn--lime btn--lg">
                   Jelajahi Profil Kelurahan
                 </Link>
                 <Link to="/berita" className="btn btn--outline-light btn--lg">
@@ -62,9 +62,37 @@ export default function Beranda() {
                 </Link>
               </div>
               <span className="hero-card__note">
-                <Icon name="map-pin" />
-                {SITE.alamat}
+                Tanggal Pencanangan Kampung KB: {KAMPUNG_KB.pencanangan} ·
+                Klasifikasi: {KAMPUNG_KB.klasifikasi}
               </span>
+            </div>
+
+            {/*
+              Latar foto kantor kelurahan. Murni dekoratif — seluruh isinya
+              sudah tersampaikan lewat teks di atasnya — jadi `alt` sengaja
+              dikosongkan supaya pembaca layar melewatinya.
+            */}
+            <div className="hero-card__bg" aria-hidden="true">
+              <picture>
+                {/*
+                  Di bawah 880px fotonya tidak dipakai. `display: none` saja
+                  tidak mencegah unduhan, jadi sumber 1x1 transparan inilah
+                  yang membuat peramban ponsel tidak pernah memintanya.
+                */}
+                <source
+                  media="(max-width: 880px)"
+                  srcSet="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                />
+                <source srcSet="/hero-bg.webp" type="image/webp" />
+                <img
+                  src="/hero-bg.jpg"
+                  alt=""
+                  width={1280}
+                  height={851}
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </picture>
             </div>
           </div>
 

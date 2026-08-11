@@ -137,6 +137,15 @@
   --btn-bg: #fff;
 }
 
+/* Hijau muda di atas latar hijau tua - dipakai tombol utama hero. */
+.btn--lime {
+  --btn-bg: var(--lime-band);
+  --btn-fg: var(--forest-900);
+}
+.btn--lime:hover {
+  --btn-bg: #f2f7dc;
+}
+
 .btn--sm {
   padding: 0.5rem 0.95rem;
   font-size: 0.82rem;

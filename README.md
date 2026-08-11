@@ -45,6 +45,7 @@ Tata letaknya terpisah dari situs publik dan dijaga token JWT.
 | `/berita`        | `src/pages/Berita.tsx`      | Daftar berita, filter kategori, pencarian, paginasi                        |
 | `/berita/:slug`  | `src/pages/BeritaDetail.tsx`| Artikel lengkap, tombol bagikan, berita terkait                            |
 | `/galeri`        | `src/pages/Galeri.tsx`      | Grid album + filter + lightbox (navigasi panah & Esc)                      |
+| `/edukasi-sampah`| `src/pages/EdukasiSampah.tsx`| Materi KKN tematik: permainan pilah sampah, panduan 4 kategori, langkah di rumah |
 | `/data`          | `src/pages/Data.tsx`        | Penduduk per RT, piramida umur, pendidikan, pekerjaan, agama, sarana       |
 | `/kontak`        | `src/pages/Kontak.tsx`      | Info kontak, jam layanan, formulir pesan, peta lokasi                      |
 | `*`              | `src/pages/NotFound.tsx`    | Halaman 404                                                                 |
@@ -192,6 +193,22 @@ publikasi aslinya — bukan tafsiran atas isi frame. Tiap entri menyimpan
 `sumber`, dan tautan "publikasi asli" muncul di dalam lightbox.
 
 Menambah dokumentasi: lewat `/admin/galeri`.
+
+## Edukasi sampah (KKN tematik)
+
+`/edukasi-sampah` memuat materi pemilahan sampah beserta permainan tebak
+tempat sampah. Seluruhnya berjalan di peramban — tidak menyentuh backend, dan
+rekor pemain hanya disimpan di `localStorage` perangkat masing-masing.
+
+Materinya di [`src/data/sampah.ts`](src/data/sampah.ts): empat kategori
+(organik, anorganik, B3, residu) dan 25 barang rumah tangga beserta alasan
+penggolongannya. Menambah soal cukup dengan menambah entri di `ITEM`; jumlah
+soal per ronde diatur lewat `SOAL_PER_RONDE`.
+
+Angka pada bagian pengantar (4 drop point, 2 RW, ±200 KK) mengikuti program
+pemilahan yang benar-benar berjalan di kelurahan; sumbernya berita
+`/berita/bank-sampah-organik-berbasis-warga`. Perbarui `FAKTA` di berkas yang
+sama bila cakupan programnya berubah.
 
 Album: **Apel Pagi** (8), **Penilaian Eco Office** (3), **Kesehatan** (2),
 **Pengumuman** (2). Album Pengumuman berisi poster/infografis, bukan foto

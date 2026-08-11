@@ -41,6 +41,68 @@
   padding-inline-end: 0;
 }
 
+/* ---------------------------------------------- Varian latar foto penuh
+
+   Foto kantor dipakai sebagai atmosfer, bukan sebagai objek yang diamati:
+   ditutup gradien hijau tua pekat sehingga pagar, kabel, dan tembok pada
+   foto dokumentasi tidak lagi terbaca sebagai kekurangan, sementara warna
+   dan kedalamannya tetap terasa. */
+
+.hero-card__top:has(.hero-card__bg) {
+  min-height: clamp(24rem, 54vh, 34rem);
+  align-content: center;
+}
+
+/* Cahaya lembutnya dipindahkan ke dalam lapisan gradien di bawah, supaya
+   tidak tertimpa foto yang ikut jadi anak dari elemen ini. */
+.hero-card__top:has(.hero-card__bg)::before {
+  content: none;
+}
+
+.hero-card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-card__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 38%;
+}
+
+/* Susunan lapisan, dari bawah ke atas: penggelap menyeluruh yang lebih tebal
+   di sisi teks, penggelap tepi bawah agar menyatu dengan pita statistik, lalu
+   cahaya hijau lembut di belakang judul. */
+.hero-card__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 62% 78% at 22% 42%,
+      rgba(133, 188, 66, 0.16),
+      transparent 68%
+    ),
+    linear-gradient(to top, rgba(15, 36, 16, 0.75), transparent 55%),
+    linear-gradient(
+      100deg,
+      rgba(15, 36, 16, 0.96) 0%,
+      rgba(15, 36, 16, 0.92) 38%,
+      rgba(15, 36, 16, 0.62) 100%
+    );
+}
+
+/* Di ponsel fotonya tidak dipakai sama sekali — dengan gradien setebal ini ia
+   nyaris tak terlihat, sementara berkasnya tetap harus diunduh. */
+@media (max-width: 880px) {
+  .hero-card__bg img {
+    display: none;
+  }
+}
+
 .hero-card__main {
   position: relative;
   z-index: 1;
@@ -1733,6 +1795,9 @@
   line-height: 1.55;
   color: var(--text-strong);
   font-weight: 500;
+  /* Surel kelurahan satu kata panjang tanpa spasi; tanpa ini ia meluber
+     keluar layar di ponsel. */
+  overflow-wrap: anywhere;
 }
 
 .contact-item__value a:hover {

@@ -30,12 +30,19 @@
 }
 
 /* Brand */
+/*
+ * `flex: none` sebelumnya membuat blok merek tidak bisa menyusut, sehingga di
+ * layar 360px ia mendorong tombol menu keluar viewport dan seluruh halaman
+ * ikut bisa digeser ke samping. Sekarang boleh menyusut, dengan `min-width: 0`
+ * agar teksnya benar-benar mau dipendekkan.
+ */
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
   margin-right: auto;
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .brand__mark {
@@ -52,6 +59,7 @@
   display: flex;
   flex-direction: column;
   line-height: 1.15;
+  min-width: 0;
 }
 
 .brand__kicker {
@@ -68,6 +76,10 @@
   font-weight: 600;
   letter-spacing: -0.015em;
   color: var(--forest-900);
+  /* Dipotong dengan elipsis hanya bila memang sudah tidak muat. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Desktop links */
@@ -134,8 +146,18 @@
 }
 
 @media (max-width: 1000px) {
-  .nav__links,
-  .nav__cta {
+  .nav__links {
+    display: none;
+  }
+
+  /*
+   * Selektor sengaja diperkuat dengan `.nav`. Tombol ini juga memakai kelas
+   * `.btn`, dan components.css di-import setelah berkas ini — dengan
+   * spesifisitas yang sama, `.btn { display: inline-flex }` menang dan
+   * tombolnya tetap tampil di ponsel, mendesak nama kelurahan sampai
+   * terpotong.
+   */
+  .nav .nav__cta {
     display: none;
   }
 

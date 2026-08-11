@@ -1,0 +1,466 @@
+/* =========================================================================
+   EDUKASI SAMPAH - permainan pilah & panduan kategori
+   ========================================================================= */
+
+/* --- Fakta program (di dalam panel gelap) --------------------------------- */
+
+.fakta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.fakta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: var(--r-sm);
+  background: var(--on-dark-fill);
+}
+
+.fakta__angka {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--leaf-300);
+}
+
+.fakta__label {
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--on-dark-2);
+}
+
+/* --- Papan permainan ------------------------------------------------------ */
+
+.game {
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.game--tengah {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.85rem;
+}
+
+.game__tanda {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.game__tanda svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.game__eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--leaf-700);
+}
+
+.game__judul {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  line-height: 1.25;
+  color: var(--ink-900);
+}
+
+.game__lead {
+  max-width: 44ch;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.game__rekor {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--r-pill);
+  background: var(--leaf-100);
+  font-size: 0.8rem;
+  color: var(--forest-800);
+}
+
+.game__rekor svg {
+  color: var(--leaf-700);
+}
+
+/* --- Kepala & kemajuan ---------------------------------------------------- */
+
+.game__kepala {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.game__langkah {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-500);
+}
+
+.game__nilai {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.85rem;
+  color: var(--ink-500);
+}
+
+.game__nilai strong {
+  font-size: 1rem;
+  color: var(--forest-800);
+}
+
+.game__runtun {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-pill);
+  background: var(--leaf-100);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--leaf-700);
+}
+
+.game__bar,
+.game__meter {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--cream-200);
+  overflow: hidden;
+}
+
+.game__meter {
+  width: min(20rem, 100%);
+  height: 8px;
+  margin: 0.35rem 0;
+}
+
+.game__bar-isi,
+.game__meter-isi {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--leaf-600);
+  transition: width 0.35s var(--ease-out);
+}
+
+/* --- Soal ----------------------------------------------------------------- */
+
+.game__tanya {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-500);
+}
+
+.game__item {
+  margin: 0.3rem 0 1.5rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.15rem);
+  line-height: 1.2;
+  color: var(--ink-900);
+}
+
+/* --- Tempat sampah -------------------------------------------------------- */
+
+.game__pilihan {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0.75rem;
+}
+
+.bin {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.1rem 0.9rem 1rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.18s var(--ease),
+    background 0.18s var(--ease),
+    transform 0.18s var(--ease);
+}
+
+.bin:hover:not(:disabled) {
+  border-color: var(--bin-warna);
+  transform: translateY(-2px);
+}
+
+.bin:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+/* Jawaban benar selalu ditandai, termasuk saat pemain memilih yang lain -
+   supaya yang salah tetap melihat mana yang seharusnya. */
+.bin--benar,
+.bin--benar:disabled {
+  opacity: 1;
+  border-color: var(--leaf-600);
+  background: var(--leaf-100);
+}
+
+.bin--salah,
+.bin--salah:disabled {
+  opacity: 1;
+  border-color: var(--clay-500);
+  background: var(--clay-100);
+}
+
+.bin__ikon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--bin-warna) 16%, transparent);
+  color: var(--bin-warna);
+}
+
+.bin__ikon svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.bin__nama {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.bin__ringkas {
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--ink-400);
+}
+
+.bin__tombol {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-400);
+}
+
+/* --- Umpan balik ---------------------------------------------------------- */
+
+.game__umpan {
+  min-height: 1px;
+}
+
+.umpan {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding: 0.95rem 1.1rem;
+  border-radius: var(--r-sm);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  animation: umpan-masuk 0.2s var(--ease-out);
+}
+
+.umpan > span {
+  flex: 1 1 16rem;
+}
+
+.umpan svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  margin-top: 0.15rem;
+}
+
+.umpan--benar {
+  background: var(--leaf-100);
+  border: 1px solid var(--leaf-300);
+  color: var(--forest-800);
+}
+
+.umpan--benar svg {
+  color: var(--leaf-700);
+}
+
+.umpan--salah {
+  background: var(--clay-100);
+  border: 1px solid var(--clay-300);
+  color: var(--clay-700);
+}
+
+.umpan--salah svg {
+  color: var(--clay-600);
+}
+
+@keyframes umpan-masuk {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+}
+
+.game__petunjuk {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--ink-400);
+}
+
+.game__petunjuk kbd {
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--cream-50);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-700);
+}
+
+/* --- Layar hasil ---------------------------------------------------------- */
+
+.game__skor-akhir {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--ink-500);
+}
+
+.game__skor-akhir strong {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--forest-800);
+}
+
+.game__aksi {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.4rem;
+}
+
+/* --- Kartu kategori ------------------------------------------------------- */
+
+.kategori-kartu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  height: 100%;
+  padding: 1.35rem;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--kat-warna);
+  border-radius: var(--r-md);
+  background: var(--paper);
+}
+
+.kategori-kartu__ikon {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--kat-warna) 15%, transparent);
+  color: var(--kat-warna);
+}
+
+.kategori-kartu__ikon svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.kategori-kartu__nama {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.kategori-kartu__ringkas {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.kategori-kartu__contoh {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.2rem 0 0.4rem;
+  list-style: none;
+}
+
+.kategori-kartu__contoh li {
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--r-pill);
+  background: var(--cream-100);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
+.kategori-kartu__penanganan {
+  margin-top: auto;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.79rem;
+  line-height: 1.6;
+  color: var(--ink-500);
+}
+
+/* --- Langkah di rumah ----------------------------------------------------- */
+
+.langkah {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper);
+}
+
+.langkah__nomor {
+  position: absolute;
+  top: 1rem;
+  right: 1.15rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--cream-200);
+}
+
+@media (max-width: 30rem) {
+  .fakta-grid {
+    grid-template-columns: 1fr;
+  }
+}
