@@ -248,6 +248,55 @@ nanti ingin pesan masuk langsung ke basis data, ganti fungsi `kirim` di
 `src/pages/Kontak.tsx` dengan pemanggilan API — misalnya Formspree, Google
 Forms, atau backend sendiri.
 
+## SEO
+
+Situs ini SPA: satu `index.html` melayani semua rute, dan metadatanya baru
+disetel JavaScript setelah halaman jalan. Mesin pencari modern me-render
+JavaScript, tetapi **crawler pratinjau tautan — WhatsApp, Facebook, Telegram —
+tidak**. Tanpa penanganan khusus, setiap tautan berita yang dibagikan warga
+akan menampilkan pratinjau beranda yang sama persis.
+
+Karena itu `npm run build` diakhiri [`scripts/prerender.mjs`](scripts/prerender.mjs),
+yang menulis satu berkas HTML statis per rute — `dist/profil/index.html`,
+`dist/berita/<slug>/index.html`, dan seterusnya — masing-masing dengan judul,
+deskripsi, canonical, Open Graph, dan JSON-LD sendiri. Badan halaman tetap
+dirakit React; yang ditambal hanya `<head>`, dan itu sudah cukup untuk
+pratinjau tautan serta memberi mesin pencari judul yang benar sejak permintaan
+pertama.
+
+Skrip yang sama juga menghasilkan `sitemap.xml` dan `robots.txt` (yang
+melarang `/admin`). Halaman admin dan 404 memasang `noindex` sendiri.
+
+**Judul dan deskripsi rute tetap ada di [`src/data/seo.json`](src/data/seo.json)** —
+satu sumber yang dipakai prerender maupun `useSeoRute()` saat pengguna
+berpindah halaman, jadi keduanya tidak mungkin berbeda. Menambah halaman
+publik berarti menambah entri di situ juga.
+
+### Variabel yang perlu disetel di Vercel
+
+| Variabel | Untuk apa |
+| -------- | --------- |
+| `VITE_API_URL` | Alamat backend. Juga dipakai prerender untuk mengambil daftar berita saat build |
+| `SITE_URL` | Hanya bila memakai domain sendiri. Di Vercel boleh kosong — skripnya otomatis memakai `VERCEL_PROJECT_PRODUCTION_URL` |
+| `VITE_SITE_URL` | Sama, untuk canonical sisi peramban |
+
+Bila `SITE_URL` kosong dan bukan di Vercel, canonical dan sitemap sengaja
+dilewati: URL absolut yang salah lebih berbahaya bagi SEO daripada tidak ada
+sama sekali. Bila API tidak terjangkau saat build, halaman berita dilewati
+dengan peringatan dan build tetap berhasil.
+
+### Batasnya
+
+Berita yang baru ditambahkan lewat panel admin **belum punya versi
+prerender-nya sampai situs di-deploy ulang**. Halamannya tetap terbuka normal
+dan tetap bisa ditemukan Google, tetapi pratinjau tautannya masih generik
+sampai build berikutnya. Bila ini mengganggu, pasang Deploy Hook Vercel lalu
+panggil dari panel admin setiap kali berita disimpan.
+
+Halaman 404 juga tetap membalas status 200 — batas yang melekat pada hosting
+statis tanpa server. Yang bisa dilakukan hanyalah memasang `noindex`, dan itu
+sudah dilakukan.
+
 ## Catatan penerapan (deploy)
 
 Routing memakai `BrowserRouter`, jadi server perlu mengarahkan semua rute ke

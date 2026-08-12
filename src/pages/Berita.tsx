@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHero } from '../components/PageHero'
-import { usePageMeta } from '../lib/usePageMeta'
+import { useSeoRute } from '../lib/usePageMeta'
 import { Icon } from '../components/Icon'
 import { Thumb } from '../components/Thumb'
 import { GLYPH } from '../lib/glyph'
@@ -21,10 +21,7 @@ import { tanggalPanjang } from '../lib/format'
 const PER_HAL = 6
 
 export default function Berita() {
-  usePageMeta(
-    'Berita & Kegiatan',
-    'Kabar terbaru seputar kegiatan, program, dan pengumuman dari Kelurahan Landasan Ulin Tengah.',
-  )
+  useSeoRute('/berita')
 
   const { data: berita, memuat, galat, ulangi } = useBerita()
 

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { PageHero } from '../components/PageHero'
-import { usePageMeta } from '../lib/usePageMeta'
+import { useSeoRute } from '../lib/usePageMeta'
 import { Icon, IconSolid } from '../components/Icon'
 import { ArrowLink, DataRow, Reveal, SectionHead } from '../components/ui'
 import { KAMPUNG_KB, SITE, SUMBER_DATA } from '../data/site'
@@ -19,10 +19,7 @@ import { useStatistik } from '../lib/sumber'
 import { angka } from '../lib/format'
 
 export default function Profil() {
-  usePageMeta(
-    'Profil Kelurahan',
-    'Sejarah, visi dan misi, struktur organisasi, batas wilayah, serta data pokok Kelurahan Landasan Ulin Tengah.',
-  )
+  useSeoRute('/profil')
 
   const { data: statistik } = useStatistik()
   const lembaga = statistik.lembaga

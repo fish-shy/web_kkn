@@ -8,7 +8,7 @@ import { SITE } from '../data/site'
 import { Kabar, useKabar } from './ui'
 
 export default function Masuk() {
-  usePageMeta('Masuk Panel Admin')
+  usePageMeta('Masuk Panel Admin', undefined, { noindex: true })
 
   const { admin, memeriksa, masuk } = useAuth()
   const navigate = useNavigate()

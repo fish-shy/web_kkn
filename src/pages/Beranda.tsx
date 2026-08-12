@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { usePageMeta } from '../lib/usePageMeta'
+import { useSeoRute } from '../lib/usePageMeta'
 import { Icon, type IconName } from '../components/Icon'
 import { MapSketch } from '../components/MapSketch'
 import { Thumb } from '../components/Thumb'
@@ -12,7 +12,7 @@ import { srcGambar } from '../lib/api'
 import { angka, tanggalPanjang } from '../lib/format'
 
 export default function Beranda() {
-  usePageMeta('Beranda', SITE.description)
+  useSeoRute('/')
 
   const { data: berita } = useBerita()
   const { data: galeri } = useGaleri()

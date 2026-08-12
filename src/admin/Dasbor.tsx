@@ -10,7 +10,7 @@ import { angka, tanggalPanjang } from '../lib/format'
 import { KartuAdmin, KepalaAdmin } from './ui'
 
 export default function Dasbor() {
-  usePageMeta('Ringkasan — Panel Admin')
+  usePageMeta('Ringkasan — Panel Admin', undefined, { noindex: true })
 
   const { admin } = useAuth()
   const berita = useBerita()

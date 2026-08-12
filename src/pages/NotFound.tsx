@@ -3,7 +3,7 @@ import { usePageMeta } from '../lib/usePageMeta'
 import { Icon } from '../components/Icon'
 
 export default function NotFound({ konteks }: { konteks?: 'berita' }) {
-  usePageMeta('Halaman tidak ditemukan')
+  usePageMeta('Halaman tidak ditemukan', undefined, { noindex: true })
 
   const berita = konteks === 'berita'
 

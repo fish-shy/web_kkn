@@ -1,5 +1,5 @@
 import { PageHero } from '../components/PageHero'
-import { usePageMeta } from '../lib/usePageMeta'
+import { useSeoRute } from '../lib/usePageMeta'
 import { Icon, type IconName } from '../components/Icon'
 import { GalatKotak, Memuat, Meter, Reveal, SectionHead } from '../components/ui'
 import { jumlah } from '../data/statistik'
@@ -8,10 +8,7 @@ import { KAMPUNG_KB, SUMBER_DATA } from '../data/site'
 import { angka, persen } from '../lib/format'
 
 export default function DataStatistik() {
-  usePageMeta(
-    'Data & Statistik',
-    'Sebaran penduduk per RT, tingkat pendidikan, kepesertaan KB, serta sarana Kampung Keluarga Berkualitas Kelurahan Landasan Ulin Tengah.',
-  )
+  useSeoRute('/data')
 
   const { data, memuat, galat, ulangi } = useStatistik()
   const {

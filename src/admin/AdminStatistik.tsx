@@ -109,7 +109,7 @@ function TombolSimpan({
 }
 
 export default function AdminStatistik() {
-  usePageMeta('Data & Statistik — Panel Admin')
+  usePageMeta('Data & Statistik — Panel Admin', undefined, { noindex: true })
 
   const { data, memuat, galat, ulangi } = useStatistik()
 

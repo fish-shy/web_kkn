@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom'
 import { PageHero } from '../components/PageHero'
-import { usePageMeta } from '../lib/usePageMeta'
+import { useSeoRute } from '../lib/usePageMeta'
 import { Icon } from '../components/Icon'
 import { PilahSampah } from '../components/PilahSampah'
 import { ArrowLink, Reveal, SectionHead } from '../components/ui'
 import { FAKTA, KATEGORI, LANGKAH } from '../data/sampah'
 
 export default function EdukasiSampah() {
-  usePageMeta(
-    'Edukasi Sampah',
-    'Panduan memilah sampah rumah tangga di Kelurahan Landasan Ulin Tengah, lengkap dengan permainan pilah sampah untuk warga dan pelajar.',
-  )
+  useSeoRute('/edukasi-sampah')
 
   return (
     <>

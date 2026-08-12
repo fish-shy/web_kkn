@@ -9,7 +9,7 @@ import { tanggalPanjang } from '../lib/format'
 import { Kabar, KepalaAdmin, useKabar } from './ui'
 
 export default function AdminBerita() {
-  usePageMeta('Kelola Berita — Panel Admin')
+  usePageMeta('Kelola Berita — Panel Admin', undefined, { noindex: true })
 
   const { data: berita, memuat, galat, ulangi } = useBerita()
   const [q, setQ] = useState('')

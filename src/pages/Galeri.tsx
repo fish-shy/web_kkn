@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHero } from '../components/PageHero'
-import { usePageMeta } from '../lib/usePageMeta'
+import { useSeoRute } from '../lib/usePageMeta'
 import { Icon } from '../components/Icon'
 import { Thumb } from '../components/Thumb'
 import { GLYPH } from '../lib/glyph'
@@ -12,10 +12,7 @@ import { srcGambar } from '../lib/api'
 import { tanggalPanjang } from '../lib/format'
 
 export default function Galeri() {
-  usePageMeta(
-    'Galeri Kegiatan',
-    'Dokumentasi kegiatan warga, posyandu, pembangunan, dan program Kelurahan Landasan Ulin Tengah.',
-  )
+  useSeoRute('/galeri')
 
   const { data: galeri, memuat, galat, ulangi } = useGaleri()
 

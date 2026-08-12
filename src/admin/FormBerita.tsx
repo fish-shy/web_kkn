@@ -29,7 +29,7 @@ export default function FormBerita() {
   const baru = !id
   const navigate = useNavigate()
 
-  usePageMeta(baru ? 'Tambah Berita — Panel Admin' : 'Sunting Berita — Panel Admin')
+  usePageMeta(baru ? 'Tambah Berita — Panel Admin' : 'Sunting Berita — Panel Admin', undefined, { noindex: true })
 
   const { data: semua } = useBerita()
 

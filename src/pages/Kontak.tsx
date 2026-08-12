@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { PageHero } from '../components/PageHero'
-import { usePageMeta } from '../lib/usePageMeta'
+import { useSeoRute } from '../lib/usePageMeta'
 import { Icon, type IconName } from '../components/Icon'
 import { Reveal, SectionHead } from '../components/ui'
 import { JAM_RINGKAS, SITE, SOSMED } from '../data/site'
@@ -44,10 +44,7 @@ const KONTAK: { icon: IconName; label: string; value: React.ReactNode }[] = [
 ]
 
 export default function Kontak() {
-  usePageMeta(
-    'Kontak',
-    `Alamat, nomor telepon, jam pelayanan, dan formulir pengaduan ${SITE.name}.`,
-  )
+  useSeoRute('/kontak')
 
   const [terkirim, setTerkirim] = useState(false)
 

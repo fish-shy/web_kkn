@@ -1,0 +1,40 @@
+{
+  "_catatan": "Judul & deskripsi tiap rute. Dipakai dua kali: oleh aplikasi saat berpindah halaman (src/data/seo.ts), dan oleh scripts/prerender.mjs yang menuliskannya ke HTML statis saat build. Berformat JSON supaya satu berkas ini bisa dibaca TypeScript maupun Node tanpa duplikasi.",
+  "rute": [
+    {
+      "path": "/",
+      "judul": "Beranda",
+      "deskripsi": "Situs resmi Kelurahan Landasan Ulin Tengah, Kecamatan Liang Anggang, Kota Banjarbaru. Profil wilayah, data kependudukan, berita kegiatan, dan layanan bagi warga."
+    },
+    {
+      "path": "/profil",
+      "judul": "Profil Kelurahan",
+      "deskripsi": "Sejarah pembentukan, visi dan misi, struktur organisasi RT/RW, batas wilayah, serta data pokok Kelurahan Landasan Ulin Tengah, Banjarbaru."
+    },
+    {
+      "path": "/berita",
+      "judul": "Berita & Kegiatan",
+      "deskripsi": "Kabar terbaru kegiatan, program, dan pengumuman resmi Kelurahan Landasan Ulin Tengah, Kecamatan Liang Anggang, Kota Banjarbaru."
+    },
+    {
+      "path": "/galeri",
+      "judul": "Galeri Kegiatan",
+      "deskripsi": "Dokumentasi foto kegiatan warga, apel pagi, posyandu, dan program Kelurahan Landasan Ulin Tengah dari waktu ke waktu."
+    },
+    {
+      "path": "/edukasi-sampah",
+      "judul": "Edukasi Sampah",
+      "deskripsi": "Panduan memilah sampah rumah tangga beserta permainan pilah sampah untuk warga Kelurahan Landasan Ulin Tengah. Bagian dari program KKN tematik pengelolaan sampah."
+    },
+    {
+      "path": "/data",
+      "judul": "Data & Statistik",
+      "deskripsi": "Sebaran penduduk per RT, tingkat pendidikan, kepesertaan KB, posyandu, dan sarana Kampung Keluarga Berkualitas Kelurahan Landasan Ulin Tengah."
+    },
+    {
+      "path": "/kontak",
+      "judul": "Kontak",
+      "deskripsi": "Alamat kantor, nomor telepon, jam pelayanan, dan peta lokasi Kelurahan Landasan Ulin Tengah, Kecamatan Liang Anggang, Kota Banjarbaru."
+    }
+  ]
+}

@@ -22,8 +22,9 @@
       property="og:description"
       content="Profil wilayah, berita, dan kegiatan warga Kelurahan Landasan Ulin Tengah."
     />
-    <meta property="og:image" content="/logo-kelurahan.jpg" />
+    <meta property="og:image" content="/og-image.jpg" />
     <meta property="og:locale" content="id_ID" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,6 +33,11 @@
       rel="stylesheet"
     />
 
+    <!--
+      Metadata di berkas ini hanya cadangan untuk rute yang belum di-prerender.
+      Tiap rute mendapat judul, deskripsi, canonical, dan tag Open Graph-nya
+      sendiri dari scripts/prerender.mjs saat build — lihat README.
+    -->
     <title>Kelurahan Landasan Ulin Tengah</title>
   </head>
   <body>

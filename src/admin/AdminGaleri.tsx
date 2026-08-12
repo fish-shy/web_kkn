@@ -27,7 +27,7 @@ const KOSONG: Isian = {
 }
 
 export default function AdminGaleri() {
-  usePageMeta('Kelola Galeri — Panel Admin')
+  usePageMeta('Kelola Galeri — Panel Admin', undefined, { noindex: true })
 
   const { data: galeri, memuat, galat, ulangi } = useGaleri()
 

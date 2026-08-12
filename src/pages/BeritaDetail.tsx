@@ -51,7 +51,14 @@ export default function BeritaDetail() {
 
   const siap = hasil?.slug === slug ? hasil : null
   const berita = siap?.isi?.berita
-  usePageMeta(berita?.judul ?? 'Berita', berita?.ringkas)
+
+  // Tiap artikel punya pratinjau tautannya sendiri — judul, ringkasan, dan
+  // fotonya. Versi statis yang dibaca WhatsApp dibuat oleh scripts/prerender.mjs.
+  usePageMeta(berita?.judul ?? 'Berita', berita?.ringkas, {
+    gambar: berita?.foto,
+    jenis: 'article',
+    noindex: siap?.hilang,
+  })
 
   if (siap?.hilang) return <NotFound konteks="berita" />
 
